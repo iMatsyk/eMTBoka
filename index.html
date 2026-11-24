@@ -19,7 +19,7 @@
   --display:Montserrat,Arial,sans-serif; --body:Rubik,Arial,sans-serif;
 }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--sky);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;background:var(--sky);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
 a{color:inherit}
 img{display:block;max-width:100%}
 h1,h2,h3{font-family:var(--display);font-weight:800;text-transform:uppercase;margin:0}
@@ -53,7 +53,7 @@ a:focus-visible,button:focus-visible,#hscroll:focus-visible{outline:3px solid va
 #hscroll{flex:1 1 auto;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 /* no scrollbars: the red line above the road shows progress */
 #hscroll::-webkit-scrollbar,.panel::-webkit-scrollbar{display:none;width:0;height:0}
-.panel{flex:0 0 100%;min-width:0;scroll-snap-align:start;padding:clamp(16px,4vh,40px) var(--pad);display:flex;flex-direction:column;justify-content:center;gap:clamp(12px,3vh,28px);overflow-y:auto;scrollbar-width:none}
+.panel{flex:0 0 100%;min-width:0;scroll-snap-align:start;padding:clamp(16px,4vh,40px) var(--pad);display:flex;flex-direction:column;justify-content:center;gap:clamp(12px,3vh,28px);overflow:hidden}
 .alt{background:var(--sand)}
 .row{display:flex;align-items:center;gap:48px}
 .row>*{flex:1 1 0;min-width:0}
@@ -97,6 +97,32 @@ h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
 .addr{margin:0 0 6px;font-size:20px;font-weight:500}
 .foot{margin:0;color:var(--muted);font-size:14px}
 
+/* messengers */
+.msg{display:flex;gap:6px}
+.ic{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;color:#fff}
+.ic svg,.opt svg,.btn-ig svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.wa{background:#1F9D55}.vb{background:#6F4BC4}.tg{background:#2A8BC9}
+.ic:hover{filter:brightness(1.12)}
+.btn-ig{gap:8px;background:#C13584;color:#fff}
+.btn-ig:hover{background:#9E2A6C}
+.bx{position:relative;width:260px;max-width:100%;height:48px;z-index:5}
+.bx .opt,.bx .bx-btn{position:absolute;left:0;top:0;width:100%;height:48px;margin:0}
+.opt{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:8px;color:#fff;text-decoration:none;font:800 13px var(--display);letter-spacing:.06em;text-transform:uppercase;opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.2,.9,.3,1.3),opacity .2s}
+.bx-btn{transition:opacity .2s,transform .3s}
+.bx.on .bx-btn{opacity:0;transform:scale(.92);pointer-events:none}
+.bx.on .opt{opacity:1;pointer-events:auto}
+.bx.on .opt:nth-child(2){transform:translateY(56px)}
+.bx.on .opt:nth-child(3){transform:translateY(112px)}
+.bx.up.on .opt:nth-child(1){transform:translateY(-112px)}
+.bx.up.on .opt:nth-child(2){transform:translateY(-56px)}
+.bx.up.on .opt:nth-child(3){transform:none}
+.opt:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.bx::before{content:"";position:absolute;left:-10px;right:-10px;top:-10px;height:68px;border-radius:14px;background:var(--bxbg,var(--sky));box-shadow:0 10px 30px rgba(27,25,23,.18);opacity:0;pointer-events:none;transition:opacity .2s,height .45s cubic-bezier(.2,.9,.3,1.3),top .45s cubic-bezier(.2,.9,.3,1.3)}
+.bx.on::before{opacity:1;height:180px}
+.bx.up.on::before{top:-122px}
+.hero .bx{--bxbg:var(--sky)} .bike .bx{--bxbg:var(--card)} .sup .bx{--bxbg:var(--sand)}
+@media (prefers-reduced-motion:reduce){.opt,.bx-btn{transition:none}}
+
 /* road with cyclist */
 .track{height:var(--track);flex:0 0 var(--track);position:relative;overflow:hidden;border-top:3px solid var(--ink);background:linear-gradient(#96B4D4,#D6E3F0 42%)}
 .track .sea{position:absolute;left:0;right:0;top:42%;bottom:0;background:linear-gradient(#5991D8,#4975AB)}
@@ -120,7 +146,20 @@ h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
   .logo{font-size:18px}
   .nav{display:none}
   .right{gap:8px}
-  .top .btn{min-height:44px;padding:0 10px}
+  .ic{width:36px;height:36px}
+  .ic svg{width:19px;height:19px}
+  .msg{gap:4px}
+  .lang{min-width:36px}
+  .bx{width:100%;height:44px}
+  .bx .opt,.bx .bx-btn{height:44px}
+  .bx.on .opt:nth-child(2){transform:translateY(50px)}
+  .bx.on .opt:nth-child(3){transform:translateY(100px)}
+  .bx.up.on .opt:nth-child(1){transform:translateY(-100px)}
+  .bx.up.on .opt:nth-child(2){transform:translateY(-50px)}
+  .bx::before{height:64px}
+  .bx.on::before{height:164px}
+  .bx.up.on::before{top:-110px}
+  .hero .bx{width:260px}
   .panel{padding:clamp(12px,2.4vh,20px) 20px;gap:clamp(8px,1.6vh,14px);justify-content:flex-start}
   .row{flex-direction:column;align-items:stretch;gap:14px}
   .hero .row{flex-direction:column-reverse}
@@ -144,7 +183,8 @@ h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
   .price{font-size:30px}
   .big .price{font-size:40px}
   .prices{margin-bottom:10px}
-  .bike .btn{min-height:44px;padding:6px 10px;font-size:11px;white-space:normal;text-align:center;width:100%;letter-spacing:.03em}
+  .bike .btn{min-height:44px;padding:6px 10px;font-size:12px;width:100%}
+  .bike .opt{font-size:11px;gap:6px}
   .sup .row{max-height:none;flex:0 0 auto}
   .sup-img{height:clamp(110px,24vh,200px)}
   .why h3{font-size:15px}
@@ -170,7 +210,11 @@ h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
       <button class="lang" type="button" data-lang="en" lang="en">EN</button>
       <button class="lang" type="button" data-lang="ru" lang="ru">RU</button>
     </div>
-    <a class="btn btn-red" href="https://wa.me/38267548889">WhatsApp</a>
+    <div class="msg">
+      <a class="ic wa" href="https://wa.me/38267548889" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.3 8.3 0 1 1 8 19.3z"/><path d="M9 8.6c0 3.3 2.6 6 5.9 6l1.1-1.5-1.9-1-0.9 0.8a4.5 4.5 0 0 1-2.5-2.5l0.8-0.9-1-1.9z"/></svg></a>
+      <a class="ic vb" href="viber://chat?number=%2B38269546547" aria-label="Viber"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8c-5 0-8.2 2-8.2 7.6 0 3.6 1.3 5.6 3.6 6.6v3.6l2.9-3c0.6 0.1 1.1 0.1 1.7 0.1 5 0 8.2-2 8.2-7.3S17 2.8 12 2.8z"/><path d="M9.3 7.6l1.4-0.3 0.9 2-1 0.8c0.5 1 1.3 1.8 2.3 2.3l0.8-1 2 0.9-0.3 1.4c-3.2 0.3-6.4-2.9-6.1-6.1z"/></svg></a>
+      <a class="ic tg" href="https://t.me/TELEGRAM_NICK" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4.2L2.8 11.3l5.6 2 2 6.2 3.2-3.6 5 3.7z"/><path d="M8.4 13.3L18 7.2l-7.6 8.7"/></svg></a>
+    </div>
   </div>
 </header>
 
@@ -183,9 +227,7 @@ h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
         <h1 data-t="heroTitle"></h1>
         <p class="sub" data-t="heroSub"></p>
         <div class="ctas">
-          <a class="btn btn-red" href="https://wa.me/38267548889" data-t="ctaWa"></a>
-          <span class="hint hint-desk" data-t="scrollHint"></span>
-          <span class="hint hint-phone" data-t="scrollHintM"></span>
+          <div class="bx"><a class="opt wa" href="https://wa.me/38267548889"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.3 8.3 0 1 1 8 19.3z"/><path d="M9 8.6c0 3.3 2.6 6 5.9 6l1.1-1.5-1.9-1-0.9 0.8a4.5 4.5 0 0 1-2.5-2.5l0.8-0.9-1-1.9z"/></svg><span>WhatsApp</span></a><a class="opt vb" href="viber://chat?number=%2B38269546547"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8c-5 0-8.2 2-8.2 7.6 0 3.6 1.3 5.6 3.6 6.6v3.6l2.9-3c0.6 0.1 1.1 0.1 1.7 0.1 5 0 8.2-2 8.2-7.3S17 2.8 12 2.8z"/><path d="M9.3 7.6l1.4-0.3 0.9 2-1 0.8c0.5 1 1.3 1.8 2.3 2.3l0.8-1 2 0.9-0.3 1.4c-3.2 0.3-6.4-2.9-6.1-6.1z"/></svg><span>Viber</span></a><a class="opt tg" href="https://t.me/TELEGRAM_NICK"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4.2L2.8 11.3l5.6 2 2 6.2 3.2-3.6 5 3.7z"/><path d="M8.4 13.3L18 7.2l-7.6 8.7"/></svg><span>Telegram</span></a><button class="btn btn-red bx-btn" type="button" aria-expanded="false" data-t="ctaBook"></button></div>
         </div>
       </div>
       <img class="hero-img" data-img="p02" alt="Trailer with red e-bikes on the road to Luštica Bay" width="1050" height="1400">
@@ -211,7 +253,7 @@ h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
         <h2 data-t="supTitle"></h2>
         <p class="muted" style="margin:8px 0 24px" data-t="supIntro"></p>
         <div class="prices big" id="supList"></div>
-        <a class="btn btn-red" href="https://wa.me/38267548889" data-t="ctaWa"></a>
+        <div class="bx"><a class="opt wa" href="https://wa.me/38267548889"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.3 8.3 0 1 1 8 19.3z"/><path d="M9 8.6c0 3.3 2.6 6 5.9 6l1.1-1.5-1.9-1-0.9 0.8a4.5 4.5 0 0 1-2.5-2.5l0.8-0.9-1-1.9z"/></svg><span>WhatsApp</span></a><a class="opt vb" href="viber://chat?number=%2B38269546547"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8c-5 0-8.2 2-8.2 7.6 0 3.6 1.3 5.6 3.6 6.6v3.6l2.9-3c0.6 0.1 1.1 0.1 1.7 0.1 5 0 8.2-2 8.2-7.3S17 2.8 12 2.8z"/><path d="M9.3 7.6l1.4-0.3 0.9 2-1 0.8c0.5 1 1.3 1.8 2.3 2.3l0.8-1 2 0.9-0.3 1.4c-3.2 0.3-6.4-2.9-6.1-6.1z"/></svg><span>Viber</span></a><a class="opt tg" href="https://t.me/TELEGRAM_NICK"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4.2L2.8 11.3l5.6 2 2 6.2 3.2-3.6 5 3.7z"/><path d="M8.4 13.3L18 7.2l-7.6 8.7"/></svg><span>Telegram</span></a><button class="btn btn-red bx-btn" type="button" aria-expanded="false" data-t="ctaBook"></button></div>
       </div>
       <img class="sup-img" data-img="p11" alt="E-bikes parked in front of SUP boards" loading="lazy">
     </div>
@@ -237,7 +279,7 @@ h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
         <h2 data-t="whereTitle" style="margin-bottom:16px"></h2>
         <p class="addr">Seljanovo, Tivat 85320</p>
         <p class="muted" style="margin:0 0 20px" data-t="contactNote"></p>
-        <a class="btn btn-line" href="https://maps.app.goo.gl/2aDaui1P1Jf38zRu6" data-t="ctaMap"></a>
+        <div class="ctas"><a class="btn btn-line" href="https://maps.app.goo.gl/2aDaui1P1Jf38zRu6" data-t="ctaMap"></a><a class="btn btn-ig" href="https://www.instagram.com/e_bike_tivat/"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6"/></svg><span>Instagram</span></a></div>
       </div>
       <iframe class="map" title="Map: Seljanovo, Tivat" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Seljanovo,+Tivat,+Montenegro&amp;output=embed"></iframe>
     </div>
@@ -291,7 +333,7 @@ const COPY = {
     heroTitle: 'Duže rute. Manje napora.',
     heroSub: 'Električni brdski i gradski bicikli u Tivtu i SUP daske za zaliv. Pišite nam na WhatsApp i izaberite svoju vožnju.',
     scrollHint: 'Listajte udesno i vozite dalje →', scrollHintM: 'Prevucite za vožnju →',
-    ctaWa: 'Rezerviši preko WhatsAppa', ctaMap: 'Otvori u Google Maps',
+    ctaWa: 'Rezerviši preko WhatsAppa', ctaBook: 'Rezerviši', ctaMap: 'Otvori u Google Maps',
     photoHero: '[MAPA RUTE ili fotografija upravljača od vlasnika]',
     photoShort: '[FOTO]',
     bikesTitle: 'Električni bicikli',
@@ -331,7 +373,7 @@ const COPY = {
     heroTitle: 'Bigger routes. Less effort.',
     heroSub: 'Electric mountain and city bikes in Tivat, plus SUP boards for the bay. Message us on WhatsApp and pick your ride.',
     scrollHint: 'Scroll sideways to ride along →', scrollHintM: 'Swipe to ride →',
-    ctaWa: 'Book on WhatsApp', ctaMap: 'Open in Google Maps',
+    ctaWa: 'Book on WhatsApp', ctaBook: 'Book now', ctaMap: 'Open in Google Maps',
     photoHero: '[ROUTE MAP or handlebar POV photo from the owner]',
     photoShort: '[PHOTO]',
     bikesTitle: 'Electric bikes',
@@ -371,7 +413,7 @@ const COPY = {
     heroTitle: 'Больше маршрутов. Меньше усилий.',
     heroSub: 'Электрические горные и городские байки в Тивате и SUP-борды для залива. Напишите в WhatsApp и выберите свой вариант.',
     scrollHint: 'Листайте вбок, чтобы ехать дальше →', scrollHintM: 'Листайте вбок →',
-    ctaWa: 'Забронировать в WhatsApp', ctaMap: 'Открыть в Google Maps',
+    ctaWa: 'Забронировать в WhatsApp', ctaBook: 'Забронировать', ctaMap: 'Открыть в Google Maps',
     photoHero: '[КАРТА МАРШРУТА или фото руля от первого лица от владельца]',
     photoShort: '[ФОТО]',
     bikesTitle: 'Электробайки',
@@ -420,7 +462,21 @@ const COPY = {
   var ROUTE_IMG = [IMG.p04, IMG.p06, IMG.p03, IMG.p09];
   var BIKE_IMG = [[IMG.p09, '50% 62%'], [IMG.p11, '62% 60%']];
   document.querySelectorAll('img[data-img]').forEach(function (im) { im.src = IMG[im.getAttribute('data-img')]; });
+  var BX = '<div class="bx"><a class="opt wa" href="https://wa.me/38267548889"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.3 8.3 0 1 1 8 19.3z"/><path d="M9 8.6c0 3.3 2.6 6 5.9 6l1.1-1.5-1.9-1-0.9 0.8a4.5 4.5 0 0 1-2.5-2.5l0.8-0.9-1-1.9z"/></svg><span>WhatsApp</span></a><a class="opt vb" href="viber://chat?number=%2B38269546547"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8c-5 0-8.2 2-8.2 7.6 0 3.6 1.3 5.6 3.6 6.6v3.6l2.9-3c0.6 0.1 1.1 0.1 1.7 0.1 5 0 8.2-2 8.2-7.3S17 2.8 12 2.8z"/><path d="M9.3 7.6l1.4-0.3 0.9 2-1 0.8c0.5 1 1.3 1.8 2.3 2.3l0.8-1 2 0.9-0.3 1.4c-3.2 0.3-6.4-2.9-6.1-6.1z"/></svg><span>Viber</span></a><a class="opt tg" href="https://t.me/TELEGRAM_NICK"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4.2L2.8 11.3l5.6 2 2 6.2 3.2-3.6 5 3.7z"/><path d="M8.4 13.3L18 7.2l-7.6 8.7"/></svg><span>Telegram</span></a><button class="btn btn-red bx-btn" type="button" aria-expanded="false" data-t="ctaBook"></button></div>';
   var price = function (p) { return '<div><div class="price">' + esc(p[1]) + '</div><div class="plabel">' + esc(p[0]) + '</div></div>'; };
+
+  /* every section must fit the screen without scrolling up/down: shrink its content a little if needed */
+  function fitPanels() {
+    Array.prototype.forEach.call(scroller.children, function (panel) {
+      var kids = Array.prototype.slice.call(panel.children);
+      var z = 1;
+      kids.forEach(function (k) { k.style.zoom = ''; });
+      while (panel.scrollHeight > panel.clientHeight + 1 && z > 0.6) {
+        z -= 0.03;
+        kids.forEach(function (k) { k.style.zoom = z.toFixed(2); });
+      }
+    });
+  }
 
   function render() {
     var c = COPY[lang];
@@ -432,21 +488,38 @@ const COPY = {
       return '<article class="card route"><img src="' + ROUTE_IMG[i] + '" alt="' + esc(r) + '" loading="lazy"><div><span class="num">0' + (i + 1) + '</span><h3>' + esc(r) + '</h3><p>' + esc(c.routeNote) + '</p></div></article>';
     }).join('');
     $('bikeList').innerHTML = c.bikes.map(function (b, i) {
-      return '<article class="card bike"><img src="' + BIKE_IMG[i][0] + '" alt="' + esc(b.name) + '" style="object-position:' + BIKE_IMG[i][1] + '" loading="lazy"><div class="in"><h3>' + esc(b.name) + '</h3><p class="kind">' + esc(b.kind) + '</p><div class="prices">' + b.prices.map(price).join('') + '</div><a class="btn btn-red" href="https://wa.me/38267548889">' + esc(c.ctaWa) + '</a></div></article>';
+      return '<article class="card bike"><img src="' + BIKE_IMG[i][0] + '" alt="' + esc(b.name) + '" style="object-position:' + BIKE_IMG[i][1] + '" loading="lazy"><div class="in"><h3>' + esc(b.name) + '</h3><p class="kind">' + esc(b.kind) + '</p><div class="prices">' + b.prices.map(price).join('') + '</div>' + BX.replace('data-t="ctaBook">', 'data-t="ctaBook">' + esc(c.ctaBook)) + '</div></article>';
     }).join('');
     $('supList').innerHTML = c.sup.map(price).join('');
     $('whyList').innerHTML = c.why.map(function (w, i) { return '<div class="why"><span class="num">0' + (i + 1) + '</span><h3>' + esc(w[0]) + '</h3><p>' + esc(w[1]) + '</p></div>'; }).join('');
     $('stepList').innerHTML = c.steps.map(function (s, i) { return '<div class="step"><span class="n">' + (i + 1) + '</span><div><h3>' + esc(s[0]) + '</h3><p>' + esc(s[1]) + '</p></div></div>'; }).join('');
     document.querySelectorAll('.lang').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
     markNav();
+    fitPanels();
   }
 
+  function closeAll(except) {
+    document.querySelectorAll('.bx.on').forEach(function (b) { if (b !== except) { b.classList.remove('on'); b.querySelector('.bx-btn').setAttribute('aria-expanded', 'false'); } });
+  }
   document.addEventListener('click', function (e) {
+    var bb = e.target.closest('.bx-btn');
+    if (bb) {
+      var bx = bb.parentNode, panel = bx.closest('.panel');
+      closeAll(bx);
+      var r = bx.getBoundingClientRect(), pr = panel.getBoundingClientRect();
+      bx.classList.toggle('up', r.bottom + 112 > pr.bottom);
+      bx.classList.add('on'); bb.setAttribute('aria-expanded', 'true');
+      var first = bx.querySelector('.opt'); setTimeout(function () { first.focus({ preventScroll: true }); }, 50);
+      return;
+    }
+    if (!e.target.closest('.bx')) closeAll();
     var l = e.target.closest('[data-lang]');
     if (l) { lang = l.getAttribute('data-lang'); try { localStorage.setItem('emtboka-lang', lang); } catch (err) {} render(); return; }
     var g = e.target.closest('[data-go]');
     if (g) { e.preventDefault(); goTo(+g.getAttribute('data-go')); }
   });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAll(); });
+  scroller.addEventListener('scroll', function () { if (!intro) closeAll(); }, { passive: true });
   function goTo(i) { scroller.scrollTo({ left: i * scroller.clientWidth, behavior: 'smooth' }); }
   function markNav() {
     var i = Math.round(scroller.scrollLeft / Math.max(1, scroller.clientWidth));
@@ -664,7 +737,6 @@ const COPY = {
   }
   function runIntro() {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    try { if (sessionStorage.getItem('emtboka-intro')) return; sessionStorage.setItem('emtboka-intro', '1'); } catch (err) {}
     if (scroller.scrollLeft > 0) return;
     var dist = scroller.clientWidth * 0.3, dur = 1700, t0 = null;
     scroller.style.scrollSnapType = 'none'; scroller.style.scrollBehavior = 'auto';
@@ -691,11 +763,14 @@ const COPY = {
   window.addEventListener('resize', function () {
     var phone = window.innerWidth <= 760;
     if (phone !== lastPhone) { lastPhone = phone; build(); } else update();
+    fitPanels();
   });
 
   render();
   lastPhone = window.innerWidth <= 760;
   build();
+  window.addEventListener('load', fitPanels);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPanels);
   setTimeout(runIntro, 900);
 })();
 </script>
