@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="cnr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>eMTBoka — iznajmljivanje e-bicikala i SUP dasaka, Tivat</title>
+<meta name="description" content="E-bike and SUP rental in Tivat, Montenegro. Electric mountain and city bikes, SUP boards, routes around the Bay of Kotor. Book on WhatsApp or Viber.">
+<meta name="theme-color" content="#1B1917">
+<meta property="og:title" content="eMTBoka — e-bike and SUP rental, Tivat">
+<meta property="og:description" content="Electric mountain and city bikes, SUP boards and routes around the Bay of Kotor.">
+<meta property="og:image" content="images/p02.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Rubik:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ink:#1B1917; --paper:#F4EFE6; --sky:#BFD4EA; --sand:#EADFCB; --card:#F7F2E8; --line:#CBBFA8;
+  --muted:#3A424B; --red:#B3211E; --red-dark:#8F1A17; --red-light:#FF5A4D;
+  --head:72px; --track:150px; --pad:64px;
+  --display:Montserrat,Arial,sans-serif; --body:Rubik,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--sky);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+a{color:inherit}
+img{display:block;max-width:100%}
+h1,h2,h3{font-family:var(--display);font-weight:800;text-transform:uppercase;margin:0}
+.app{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+
+/* header */
+.top{height:var(--head);flex:0 0 var(--head);background:var(--ink);color:var(--paper);border-bottom:3px solid var(--red);padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:var(--display);font-weight:800;font-size:24px;text-decoration:none}
+.logo span{color:var(--red-light)}
+.nav{display:flex;gap:4px}
+.nb{min-height:44px;padding:0 10px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--paper);font:500 15px var(--body);cursor:pointer}
+.nb:hover,.nb[aria-current="true"]{border-bottom-color:var(--red-light)}
+.right{display:flex;align-items:center;gap:12px}
+.langs{display:flex;border-radius:8px;overflow:hidden}
+.lang{min-width:44px;min-height:44px;border:2px solid #5B5F66;background:transparent;color:var(--paper);font:800 13px var(--display);cursor:pointer}
+.lang[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;font:800 13px var(--display);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-radius:8px;border:2px solid transparent;cursor:pointer;white-space:nowrap}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-dark)}
+.btn-line{border-color:var(--ink);color:var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--paper)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-white{border-color:#fff;color:#fff}
+.btn-white:hover{background:#fff;color:var(--red)}
+a:focus-visible,button:focus-visible,#hscroll:focus-visible{outline:3px solid var(--red);outline-offset:-3px}
+.book a:focus-visible{outline-color:#fff}
+
+/* horizontal panels */
+#hscroll{flex:1 1 auto;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--red) var(--sand);overscroll-behavior-x:contain}
+.panel{flex:0 0 100%;scroll-snap-align:start;padding:40px var(--pad);display:flex;flex-direction:column;justify-content:center;gap:28px;overflow-y:auto}
+.alt{background:var(--sand)}
+.row{display:flex;align-items:center;gap:48px}
+.row>*{flex:1 1 0;min-width:0}
+.kicker{margin:0 0 12px;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
+h1{font-size:clamp(36px,5vw,64px);line-height:1.03;letter-spacing:-.01em;margin-bottom:20px}
+h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
+.sub{margin:0 0 28px;max-width:500px;color:var(--muted);font-size:18px}
+.muted{color:var(--muted)}
+.ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.hint{color:var(--muted);font-size:15px}
+.hero-img{height:100%;max-height:460px;width:100%;object-fit:cover;object-position:50% 72%;border-radius:12px;border:3px solid var(--ink)}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.card{background:var(--card);border-radius:12px;overflow:hidden}
+.route img{width:100%;height:150px;object-fit:cover}
+.route div{padding:16px 18px 20px}
+.num{font:800 22px var(--display);color:var(--red)}
+.route h3{font-size:16px;line-height:1.2;margin:2px 0 6px}
+.route p{margin:0;color:var(--muted);font-size:14px}
+.bike{display:flex}
+.bike img{flex:0 0 40%;width:40%;object-fit:cover}
+.bike .in{flex:1 1 0;min-width:0;padding:24px}
+.bike h3{font-size:22px}
+.bike .kind{margin:2px 0 16px;color:var(--muted);font-size:15px}
+.prices{display:flex;flex-wrap:wrap;gap:8px 24px;margin-bottom:16px}
+.price{font:800 44px/1 var(--display);color:var(--red)}
+.big .price{font-size:56px}
+.plabel{color:var(--muted);font-size:14px}
+.sup-img{width:100%;height:400px;object-fit:cover;border-radius:12px}
+.why{border-top:3px solid var(--red);padding-top:16px}
+.why h3{font-size:18px;margin:6px 0}
+.why p{margin:0;color:var(--muted);font-size:16px}
+.book{background:var(--red);color:#fff}
+.step .n{font:800 56px/1 var(--display)}
+.step h3{font-size:18px;margin:6px 0}
+.step p{margin:0}
+.map{width:100%;min-height:220px;height:100%;border:2px solid var(--line);border-radius:12px}
+.addr{margin:0 0 6px;font-size:20px;font-weight:500}
+.foot{margin:0;color:var(--muted);font-size:14px}
+
+/* road with cyclist */
+.track{height:var(--track);flex:0 0 var(--track);position:relative;overflow:hidden;border-top:3px solid var(--ink);background:linear-gradient(#96B4D4,#D6E3F0 42%)}
+.track .sea{position:absolute;left:0;right:0;top:42%;bottom:0;background:linear-gradient(#5991D8,#4975AB)}
+.track svg.layer{position:absolute;left:0;top:0;will-change:transform}
+.track .wave{position:absolute;left:0;right:0;height:2px}
+#rider{position:absolute;left:0;top:0;transform-origin:48% 92.5%}
+
+/* phone */
+@media (max-width:760px){
+  :root{--head:56px;--track:120px;--pad:20px}
+  body{font-size:16px;line-height:1.5}
+  .top{padding:0 16px;gap:8px}
+  .logo{font-size:18px}
+  .nav{display:none}
+  .right{gap:8px}
+  .top .btn{min-height:44px;padding:0 10px}
+  .panel{padding:20px;gap:14px;justify-content:flex-start}
+  .row{flex-direction:column;align-items:stretch;gap:14px}
+  .hero .row{flex-direction:column-reverse}
+  .hero-img{height:210px;flex:0 0 auto}
+  .sub{font-size:16px;margin-bottom:14px}
+  h1{margin-bottom:10px}
+  .grid4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .grid3{grid-template-columns:1fr;gap:14px}
+  .grid2{grid-template-columns:1fr;gap:12px}
+  .route img{height:96px}
+  .route div{padding:10px 12px 12px}
+  .route h3{font-size:13px}
+  .route p{font-size:12px;line-height:1.35}
+  .num{font-size:16px}
+  .bike img{flex-basis:38%;width:38%}
+  .bike .in{padding:14px}
+  .bike h3{font-size:17px}
+  .bike .kind{margin-bottom:8px;font-size:14px}
+  .price{font-size:30px}
+  .big .price{font-size:40px}
+  .prices{margin-bottom:10px}
+  .bike .btn{min-height:44px;padding:6px 10px;font-size:11px;white-space:normal;text-align:center;width:100%;letter-spacing:.03em}
+  .sup-img{height:200px}
+  .why h3{font-size:15px}
+  .why p{font-size:14px;line-height:1.4}
+  .step{display:flex;gap:14px;align-items:flex-start}
+  .step .n{font-size:44px;min-width:30px}
+  .map{min-height:130px;height:130px}
+  .hint-desk{display:none}
+}
+@media (min-width:761px){.hint-phone{display:none}}
+@media (prefers-reduced-motion:reduce){#hscroll{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="top">
+  <a class="logo" href="#" data-go="0">eMTB<span>oka</span></a>
+  <nav class="nav" aria-label="Sections" id="nav"></nav>
+  <div class="right">
+    <div class="langs" role="group" aria-label="Language" id="langs">
+      <button class="lang" type="button" data-lang="me" lang="cnr">ME</button>
+      <button class="lang" type="button" data-lang="en" lang="en">EN</button>
+      <button class="lang" type="button" data-lang="ru" lang="ru">RU</button>
+    </div>
+    <a class="btn btn-red" href="https://wa.me/38267548889">WhatsApp</a>
+  </div>
+</header>
+
+<main id="hscroll" tabindex="0" aria-label="Site sections">
+
+  <section class="panel hero" id="start">
+    <div class="row">
+      <div>
+        <p class="kicker" data-t="heroKicker"></p>
+        <h1 data-t="heroTitle"></h1>
+        <p class="sub" data-t="heroSub"></p>
+        <div class="ctas">
+          <a class="btn btn-red" href="https://wa.me/38267548889" data-t="ctaWa"></a>
+          <span class="hint hint-desk" data-t="scrollHint"></span>
+          <span class="hint hint-phone" data-t="scrollHintM"></span>
+        </div>
+      </div>
+      <img class="hero-img" src="images/p02.jpg" alt="Trailer with red e-bikes on the road to Luštica Bay" width="1050" height="1400">
+    </div>
+  </section>
+
+  <section class="panel alt" id="routes">
+    <div>
+      <h2 data-t="routesTitle"></h2>
+      <p class="muted" style="margin:8px 0 0;max-width:600px" data-t="routesIntro"></p>
+    </div>
+    <div class="grid4" id="routeList"></div>
+  </section>
+
+  <section class="panel" id="bikes">
+    <h2 data-t="bikesTitle"></h2>
+    <div class="grid2" id="bikeList"></div>
+  </section>
+
+  <section class="panel alt" id="sup">
+    <div class="row">
+      <div>
+        <h2 data-t="supTitle"></h2>
+        <p class="muted" style="margin:8px 0 24px" data-t="supIntro"></p>
+        <div class="prices big" id="supList"></div>
+        <a class="btn btn-red" href="https://wa.me/38267548889" data-t="ctaWa"></a>
+      </div>
+      <img class="sup-img" src="images/p11.jpg" alt="E-bikes parked in front of SUP boards" loading="lazy">
+    </div>
+  </section>
+
+  <section class="panel" id="why">
+    <h2 data-t="whyTitle"></h2>
+    <div class="grid4" id="whyList"></div>
+  </section>
+
+  <section class="panel book" id="book">
+    <h2 data-t="bookTitle"></h2>
+    <div class="grid3" id="stepList"></div>
+    <div class="ctas">
+      <a class="btn btn-dark" href="https://wa.me/38267548889">WhatsApp</a>
+      <a class="btn btn-white" href="viber://chat?number=%2B38269546547">Viber</a>
+    </div>
+  </section>
+
+  <section class="panel" id="find">
+    <div class="row" style="align-items:stretch">
+      <div>
+        <h2 data-t="whereTitle" style="margin-bottom:16px"></h2>
+        <p class="addr">Seljanovo, Tivat 85320</p>
+        <p class="muted" style="margin:0 0 20px" data-t="contactNote"></p>
+        <a class="btn btn-line" href="https://maps.app.goo.gl/2aDaui1P1Jf38zRu6" data-t="ctaMap"></a>
+      </div>
+      <iframe class="map" title="Map: Seljanovo, Tivat" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Seljanovo,+Tivat,+Montenegro&amp;output=embed"></iframe>
+    </div>
+    <!-- Google reviews: add here only once the Google rating is confirmed at 4.7 or higher -->
+    <p class="foot">eMTBoka · WhatsApp +382 67 548 889 · Viber +382 69 546 547 · <a href="https://www.instagram.com/e_bike_tivat/">Instagram @e_bike_tivat</a></p>
+  </section>
+
+</main>
+
+<div class="track" aria-hidden="true">
+  <svg class="layer" id="lFar"></svg>
+  <div class="sea"></div>
+  <div class="wave" id="w1"></div>
+  <div class="wave" id="w2"></div>
+  <svg class="layer" id="lSea"></svg>
+  <svg class="layer" id="lForest"></svg>
+  <svg class="layer" id="lRoad"></svg>
+  <svg id="rider" viewBox="0 0 120 80">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke="#1B1917" stroke-width="3">
+        <circle cx="24" cy="56" r="18"/><circle cx="92" cy="56" r="18"/>
+        <g id="spk1"><line x1="24" y1="38" x2="24" y2="74" stroke-width="1.5"/><line x1="6" y1="56" x2="42" y2="56" stroke-width="1.5"/></g>
+        <g id="spk2"><line x1="92" y1="38" x2="92" y2="74" stroke-width="1.5"/><line x1="74" y1="56" x2="110" y2="56" stroke-width="1.5"/></g>
+      </g>
+      <g stroke="#C4241F" stroke-width="4">
+        <polyline points="24,56 50,56 80,30 44,32 24,56"/><polyline points="50,56 44,32"/><polyline points="80,30 92,56"/><polyline points="80,30 82,22"/>
+      </g>
+      <g stroke="#F4EFE6" stroke-width="5">
+        <polyline id="legB" stroke="#383B33" points=""/>
+        <polyline points="44,24 68,12"/><polyline points="68,12 82,26"/>
+        <polyline id="legF" stroke="#1B1917" points=""/>
+      </g>
+    </g>
+    <line x1="38" y1="31" x2="50" y2="31" stroke="#1B1917" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="71" cy="6" r="5.5" fill="#F4EFE6" stroke="#1B1917" stroke-width="1.5"/>
+  </svg>
+</div>
+
+</div>
+
+<script>
+const COPY = {
+  me: {
+    nav: ['Početak', 'Rute', 'Bicikli', 'SUP', 'Zašto e-bicikl', 'Rezervacija', 'Gdje smo'],
+    heroKicker: 'Iznajmljivanje e-bicikala i SUP dasaka · Tivat',
+    heroTitle: 'Duže rute. Manje napora.',
+    heroSub: 'Električni brdski i gradski bicikli u Tivtu i SUP daske za zaliv. Pišite nam na WhatsApp i izaberite svoju vožnju.',
+    scrollHint: 'Listajte udesno i vozite dalje →', scrollHintM: 'Prevucite za vožnju →',
+    ctaWa: 'Rezerviši preko WhatsAppa', ctaMap: 'Otvori u Google Maps',
+    photoHero: '[MAPA RUTE ili fotografija upravljača od vlasnika]',
+    photoShort: '[FOTO]',
+    bikesTitle: 'Električni bicikli',
+    bikes: [
+      { name: 'Trek MTB', kind: 'Električni brdski bicikl', photo: '[FOTO: crveni Trek e-MTB]', prices: [['3 sata', '30 €'], ['Cijeli dan', '49 €']] },
+      { name: 'City bike i:SY', kind: 'Električni gradski bicikl', photo: '[FOTO: zeleni gradski i:SY]', prices: [['Cijeli dan', '36 €']] }
+    ],
+    photoSup: '[FOTO: SUP daske na vodi]',
+    supTitle: 'SUP daske', supIntro: 'Isplovite daskom na zaliv.',
+    sup: [['1 sat', '10 €'], ['6 sati', '30 €']],
+    routesTitle: 'Rute iz Tivta',
+    routesIntro: 'Vozite obalom Bokokotorskog zaliva i kroz okolna mjesta.',
+    routeNote: '[Dužina i trajanje: provjeriti s vlasnikom]',
+    routes: ['Tivat i Porto Montenegro', 'Poluostrvo Luštica', 'Vidikovci Njeguša', 'Bigova'],
+    whyTitle: 'Zašto e-bicikl',
+    why: [
+      ['Laka vožnja', 'Usponi i duge dionice više nisu problem: motor vam pomaže na svakoj ruti.'],
+      ['Ekološki', 'Bez izduvnih gasova. Samo vi i priroda.'],
+      ['Štedi vrijeme', 'Brže stižete do omiljenih mjesta, bez trošenja snage.'],
+      ['Zabava za sve', 'Bez obzira na kondiciju, e-bicikl je za svakoga.']
+    ],
+    bookTitle: 'Rezervacija u tri koraka',
+    steps: [
+      ['Izaberite', 'Bicikl ili SUP dasku i na koliko vremena.'],
+      ['Pišite nam', 'Na WhatsApp ili Viber, s datumom i vremenom.'],
+      ['Vozite', 'Preuzmite bicikl u Seljanovu, Tivat, i krenite.']
+    ],
+    whereTitle: 'Gdje smo',
+    contactNote: 'WhatsApp +382 67 548 889 (samo WhatsApp), Viber +382 69 546 547.',
+    mapPlaceholder: '[Mapa: ovdje ugraditi Google Maps]',
+    reviewsTitle: 'Google recenzije',
+    reviewsPlaceholder: '[Recenzije će se pojaviti ovdje kada se potvrdi Google ocjena 4.7 ili viša. Do tada je blok skriven.]'
+  },
+  en: {
+    nav: ['Start', 'Routes', 'Bikes', 'SUP', 'Why e-bike', 'Book', 'Find us'],
+    heroKicker: 'E-bike and SUP rental · Tivat',
+    heroTitle: 'Bigger routes. Less effort.',
+    heroSub: 'Electric mountain and city bikes in Tivat, plus SUP boards for the bay. Message us on WhatsApp and pick your ride.',
+    scrollHint: 'Scroll sideways to ride along →', scrollHintM: 'Swipe to ride →',
+    ctaWa: 'Book on WhatsApp', ctaMap: 'Open in Google Maps',
+    photoHero: '[ROUTE MAP or handlebar POV photo from the owner]',
+    photoShort: '[PHOTO]',
+    bikesTitle: 'Electric bikes',
+    bikes: [
+      { name: 'Trek MTB', kind: 'Electric mountain bike', photo: '[PHOTO: red Trek e-MTB]', prices: [['3 hours', '30 €'], ['All day', '49 €']] },
+      { name: 'City bike i:SY', kind: 'Electric city bike', photo: '[PHOTO: green i:SY city e-bike]', prices: [['All day', '36 €']] }
+    ],
+    photoSup: '[PHOTO: SUP boards on the water]',
+    supTitle: 'SUP boards', supIntro: 'Take a board out on the bay.',
+    sup: [['1 hour', '10 €'], ['6 hours', '30 €']],
+    routesTitle: 'Routes from Tivat',
+    routesIntro: 'Ride the shore of the Bay of Kotor and the villages around it.',
+    routeNote: '[Distance and time: to confirm with the owner]',
+    routes: ['Tivat and Porto Montenegro', 'Luštica Peninsula', 'Njeguši viewpoints', 'Bigova'],
+    whyTitle: 'Why an e-bike',
+    why: [
+      ['Easy to ride', 'Climbs and long distances stop being a problem: the motor helps you with any route.'],
+      ['Eco-friendly', 'No emissions. Just you and the landscape.'],
+      ['Saves time', 'Reach your favourite places faster, without wasting energy.'],
+      ['Fun for everyone', 'Whatever your fitness level, an e-bike works for you.']
+    ],
+    bookTitle: 'Book in three steps',
+    steps: [
+      ['Choose', 'Pick a bike or a SUP board and how long you need it.'],
+      ['Message us', 'Write on WhatsApp or Viber with your date and time.'],
+      ['Ride', 'Pick up in Seljanovo, Tivat and go.']
+    ],
+    whereTitle: 'Find us',
+    contactNote: 'WhatsApp +382 67 548 889 (WhatsApp only), Viber +382 69 546 547.',
+    mapPlaceholder: '[Map: embed Google Maps here]',
+    reviewsTitle: 'Google reviews',
+    reviewsPlaceholder: '[Reviews go here once the Google rating is confirmed at 4.7 or higher. Hidden until then.]'
+  },
+  ru: {
+    nav: ['Старт', 'Маршруты', 'Байки', 'SUP', 'Почему электро', 'Бронь', 'Где мы'],
+    heroKicker: 'Аренда электробайков и SUP · Тиват',
+    heroTitle: 'Больше маршрутов. Меньше усилий.',
+    heroSub: 'Электрические горные и городские байки в Тивате и SUP-борды для залива. Напишите в WhatsApp и выберите свой вариант.',
+    scrollHint: 'Листайте вбок, чтобы ехать дальше →', scrollHintM: 'Листайте вбок →',
+    ctaWa: 'Забронировать в WhatsApp', ctaMap: 'Открыть в Google Maps',
+    photoHero: '[КАРТА МАРШРУТА или фото руля от первого лица от владельца]',
+    photoShort: '[ФОТО]',
+    bikesTitle: 'Электробайки',
+    bikes: [
+      { name: 'Trek MTB', kind: 'Электрический горный байк', photo: '[ФОТО: красный Trek e-MTB]', prices: [['3 часа', '30 €'], ['Весь день', '49 €']] },
+      { name: 'City bike i:SY', kind: 'Электрический городской байк', photo: '[ФОТО: зелёный городской i:SY]', prices: [['Весь день', '36 €']] }
+    ],
+    photoSup: '[ФОТО: SUP-борды на воде]',
+    supTitle: 'SUP-борды', supIntro: 'Выходите на борде на воду залива.',
+    sup: [['1 час', '10 €'], ['6 часов', '30 €']],
+    routesTitle: 'Маршруты из Тивата',
+    routesIntro: 'Катайтесь вдоль берега Которского залива и по посёлкам вокруг него.',
+    routeNote: '[Расстояние и время: уточнить у владельца]',
+    routes: ['Тиват и Порто Монтенегро', 'Полуостров Луштица', 'Смотровые Негуши', 'Бигова'],
+    whyTitle: 'Почему электробайк',
+    why: [
+      ['Лёгкость езды', 'Подъёмы и длинные дистанции больше не помеха: мотор поможет на любом маршруте.'],
+      ['Экологично', 'Никаких выбросов. Только вы и пейзаж.'],
+      ['Экономия времени', 'Быстрее добирайтесь до любимых мест, не тратя лишних сил.'],
+      ['Весело для всех', 'Любая физическая форма: электробайк подойдёт каждому.']
+    ],
+    bookTitle: 'Бронирование за три шага',
+    steps: [
+      ['Выберите', 'Байк или SUP-борд и на какое время.'],
+      ['Напишите нам', 'В WhatsApp или Viber с датой и временем.'],
+      ['Катайтесь', 'Заберите байк в Сельяново, Тиват, и в путь.']
+    ],
+    whereTitle: 'Как нас найти',
+    contactNote: 'WhatsApp +382 67 548 889 (только WhatsApp), Viber +382 69 546 547.',
+    mapPlaceholder: '[Карта: сюда встроить Google Maps]',
+    reviewsTitle: 'Отзывы Google',
+    reviewsPlaceholder: '[Отзывы появятся здесь после подтверждения рейтинга Google 4.7 и выше. До этого блок скрыт.]'
+  }
+};
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var scroller = $('hscroll');
+  var LANGS = ['me', 'en', 'ru'];
+  var HTML_LANG = { me: 'cnr', en: 'en', ru: 'ru' };
+  var lang = 'me';
+  try { var saved = localStorage.getItem('emtboka-lang'); if (LANGS.indexOf(saved) >= 0) lang = saved; } catch (e) {}
+
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var ROUTE_IMG = ['images/p04.jpg', 'images/p06.jpg', 'images/p03.jpg', 'images/p09.jpg'];
+  var BIKE_IMG = [['images/p09.jpg', '50% 62%'], ['images/p11.jpg', '62% 60%']];
+  var price = function (p) { return '<div><div class="price">' + esc(p[1]) + '</div><div class="plabel">' + esc(p[0]) + '</div></div>'; };
+
+  function render() {
+    var c = COPY[lang];
+    document.documentElement.lang = HTML_LANG[lang];
+    document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = c[el.getAttribute('data-t')]; });
+    $('nav').innerHTML = c.nav.map(function (n, i) { return '<button class="nb" type="button" data-go="' + i + '">' + esc(n) + '</button>'; }).join('');
+    $('routeList').innerHTML = c.routes.map(function (r, i) {
+      return '<article class="card route"><img src="' + ROUTE_IMG[i] + '" alt="' + esc(r) + '" loading="lazy"><div><span class="num">0' + (i + 1) + '</span><h3>' + esc(r) + '</h3><p>' + esc(c.routeNote) + '</p></div></article>';
+    }).join('');
+    $('bikeList').innerHTML = c.bikes.map(function (b, i) {
+      return '<article class="card bike"><img src="' + BIKE_IMG[i][0] + '" alt="' + esc(b.name) + '" style="object-position:' + BIKE_IMG[i][1] + '" loading="lazy"><div class="in"><h3>' + esc(b.name) + '</h3><p class="kind">' + esc(b.kind) + '</p><div class="prices">' + b.prices.map(price).join('') + '</div><a class="btn btn-red" href="https://wa.me/38267548889">' + esc(c.ctaWa) + '</a></div></article>';
+    }).join('');
+    $('supList').innerHTML = c.sup.map(price).join('');
+    $('whyList').innerHTML = c.why.map(function (w, i) { return '<div class="why"><span class="num">0' + (i + 1) + '</span><h3>' + esc(w[0]) + '</h3><p>' + esc(w[1]) + '</p></div>'; }).join('');
+    $('stepList').innerHTML = c.steps.map(function (s, i) { return '<div class="step"><span class="n">' + (i + 1) + '</span><div><h3>' + esc(s[0]) + '</h3><p>' + esc(s[1]) + '</p></div></div>'; }).join('');
+    document.querySelectorAll('.lang').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
+    markNav();
+  }
+
+  document.addEventListener('click', function (e) {
+    var l = e.target.closest('[data-lang]');
+    if (l) { lang = l.getAttribute('data-lang'); try { localStorage.setItem('emtboka-lang', lang); } catch (err) {} render(); return; }
+    var g = e.target.closest('[data-go]');
+    if (g) { e.preventDefault(); goTo(+g.getAttribute('data-go')); }
+  });
+  function goTo(i) { scroller.scrollTo({ left: i * scroller.clientWidth, behavior: 'smooth' }); }
+  function markNav() {
+    var i = Math.round(scroller.scrollLeft / Math.max(1, scroller.clientWidth));
+    document.querySelectorAll('.nb').forEach(function (b, k) { b.setAttribute('aria-current', String(k === i)); });
+  }
+
+  // mouse wheel turns the page sideways on desktop
+  var lock = 0;
+  scroller.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    var panel = e.target.closest('.panel');
+    if (panel && panel.scrollHeight > panel.clientHeight + 2) {
+      var atTop = panel.scrollTop <= 0, atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2;
+      if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) return;
+    }
+    e.preventDefault();
+    var now = Date.now();
+    if (now - lock < 650 || Math.abs(e.deltaY) < 4) return;
+    lock = now;
+    var i = Math.round(scroller.scrollLeft / scroller.clientWidth) + (e.deltaY > 0 ? 1 : -1);
+    goTo(Math.max(0, Math.min(i, scroller.children.length - 1)));
+  }, { passive: false });
+
+  /* ---------- road, sea and forest ---------- */
+  function hsh(n) { var v = Math.sin(n * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); }
+  var PR = 2400, PF = 1400, PS = 1800, PFo = 1500;
+  var T;
+  function f(v) { return v.toFixed(1); }
+  function roadY(x) {
+    var t = 2 * Math.PI * x / PR;
+    var big = -17 * (1 + Math.sin(t - 1.6)), mid = -7 * Math.sin(5 * t + 0.8) * (0.6 + 0.4 * Math.sin(2 * t)), small = -2.5 * Math.sin(16 * t);
+    return (T.H - 26 * T.k) + (big + mid + small) * T.k;
+  }
+  function svgSet(el, w, inner) { el.setAttribute('width', w); el.setAttribute('height', T.H); el.setAttribute('viewBox', '0 0 ' + w + ' ' + T.H); el.innerHTML = inner; }
+  function build() {
+    var phone = window.innerWidth <= 760;
+    T = phone ? { H: 120, k: 0.8, rw: 96, rh: 64 } : { H: 150, k: 1, rw: 120, rh: 80 };
+    var H = T.H, k = T.k, sea = Math.round(H * 0.42), x, i, y;
+    var far = 'M0 ' + (sea + 2), top = '', n = PF / 70;
+    for (i = 0; i <= 2 * n; i++) {
+      x = i * 70; var j = i % n;
+      y = sea - (10 + 26 * hsh(j) + 10 * Math.sin(2 * Math.PI * j / n)) * k;
+      far += ' L' + x + ' ' + f(y);
+      if (hsh(j + 9) > 0.78) top += 'M' + (x - 14) + ' ' + f(y + 7 * k) + ' L' + x + ' ' + f(y) + ' L' + (x + 14) + ' ' + f(y + 7 * k) + ' Z';
+    }
+    far += ' L' + 2 * PF + ' ' + (sea + 2) + ' Z';
+    svgSet($('lFar'), 2 * PF, '<path d="' + far + '" fill="#8299AE"/><path d="' + top + '" fill="#A9BACB"/>');
+
+    var sails = '', hulls = '';
+    for (var x0 = 120; x0 < PS; x0 += 260) {
+      if (hsh(x0) < 0.45) continue;
+      [0, PS].forEach(function (off) {
+        var sx = x0 + 80 * hsh(x0 + 1) + off, sy = sea + (6 + 22 * hsh(x0 + 2)) * k, z = (6 + 5 * hsh(x0 + 3)) * k;
+        sails += 'M' + f(sx) + ' ' + f(sy - 2.2 * z) + ' L' + f(sx + z) + ' ' + f(sy) + ' L' + f(sx) + ' ' + f(sy) + ' Z';
+        hulls += 'M' + f(sx - z * .6) + ' ' + f(sy + .5) + ' L' + f(sx + z * 1.5) + ' ' + f(sy + .5) + ' L' + f(sx + z * 1.1) + ' ' + f(sy + 3 * k) + ' L' + f(sx - z * .3) + ' ' + f(sy + 3 * k) + ' Z';
+      });
+    }
+    svgSet($('lSea'), 2 * PS, '<path d="' + sails + '" fill="#F4EFE6"/><path d="' + hulls + '" fill="#1B1917"/>');
+
+    var hh = function (x) { var t = 2 * Math.PI * x / PFo; return Math.max(0, Math.sin(5 * t) + 0.55 * Math.sin(15 * t + 2) + 0.35) * (H - sea) * 0.5; };
+    var hills = 'M0 ' + H, trees = '';
+    for (x = 0; x <= 2 * PFo; x += 15) hills += ' L' + x + ' ' + f(H - hh(x));
+    hills += ' L' + 2 * PFo + ' ' + H + ' Z';
+    for (x0 = 6; x0 < PFo; x0 += 18) {
+      var h0 = hh(x0); if (h0 < 6) continue;
+      var r = hsh(x0 * .37);
+      [x0, x0 + PFo].forEach(function (x) {
+        var base = H - h0 + 3, th;
+        if (r < .45) { th = (16 + 14 * hsh(x0 + 5)) * k; var tw = 3.4 * k; trees += 'M' + x + ' ' + f(base - th) + ' Q' + f(x + tw) + ' ' + f(base - th * .35) + ' ' + x + ' ' + f(base) + ' Q' + f(x - tw) + ' ' + f(base - th * .35) + ' ' + x + ' ' + f(base - th) + ' Z'; }
+        else { th = (10 + 10 * hsh(x0 + 7)) * k; trees += 'M' + f(x - th * .55) + ' ' + f(base) + ' L' + x + ' ' + f(base - th) + ' L' + f(x + th * .55) + ' ' + f(base) + ' Z'; }
+      });
+    }
+    svgSet($('lForest'), 2 * PFo, '<path d="' + hills + '" fill="#56654A"/><path d="' + trees + '" fill="#383B33"/>');
+
+    var rd = '', wall = 'M0 ' + H, joints = '', lamps = '', near = '', flw = '';
+    for (x = 0; x <= 2 * PR; x += 16) {
+      y = roadY(x); rd += (x ? ' L' : 'M') + x + ' ' + f(y); wall += ' L' + x + ' ' + f(y + 4 * k);
+      if (x % 32 === 0) joints += 'M' + x + ' ' + f(y + 10 * k + (x % 64 ? 6 * k : 0)) + ' l0 ' + f(6 * k);
+    }
+    wall += ' L' + 2 * PR + ' ' + H + ' Z';
+    for (x0 = 380; x0 < PR; x0 += 640) [x0, x0 + PR].forEach(function (x) {
+      var y = roadY(x) - 4 * k, h = 38 * k;
+      lamps += 'M' + x + ' ' + f(y) + ' l0 ' + f(-h) + ' l' + f(8 * k) + ' 0';
+      near += 'M' + f(x + 5 * k) + ' ' + f(y - h) + ' h' + f(7 * k) + ' v' + f(6 * k) + ' h' + f(-7 * k) + ' Z';
+    });
+    for (x0 = 90; x0 < PR; x0 += 110) {
+      var rr0 = hsh(x0 * 1.3);
+      [x0, x0 + PR].forEach(function (x) {
+        var y = roadY(x) - 4 * k;
+        if (rr0 > .62) { var th = (30 + 16 * hsh(x0 + 11)) * k, tw = 5 * k; near += 'M' + x + ' ' + f(y - th) + ' Q' + f(x + tw) + ' ' + f(y - th * .35) + ' ' + x + ' ' + f(y) + ' Q' + f(x - tw) + ' ' + f(y - th * .35) + ' ' + x + ' ' + f(y - th) + ' Z'; }
+        else if (rr0 < .25) for (var q = 0; q < 5; q++) { var fx = x + q * 5 * k, fy = y - (2 + 4 * hsh(x0 + q)) * k, rr = 1.6 * k; flw += 'M' + f(fx - rr) + ' ' + f(fy) + ' a' + f(rr) + ' ' + f(rr) + ' 0 1 0 ' + f(2 * rr) + ' 0 a' + f(rr) + ' ' + f(rr) + ' 0 1 0 ' + f(-2 * rr) + ' 0'; }
+      });
+    }
+    svgSet($('lRoad'), 2 * PR,
+      '<path d="' + wall + '" fill="#D9C6A8"/><path d="' + joints + '" fill="none" stroke="#B49E7C" stroke-width="1.2"/>' +
+      '<path d="' + rd + '" fill="none" stroke="#677071" stroke-width="' + Math.max(7, Math.round(H / 16)) + '" stroke-linejoin="round"/>' +
+      '<path d="' + rd + '" fill="none" stroke="#F4EFE6" stroke-width="1.5" stroke-dasharray="16 16"/>' +
+      '<path d="' + lamps + '" fill="none" stroke="#1B1917" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="' + near + '" fill="#2B2E27"/><path d="' + flw + '" fill="#E07A9A"/>');
+
+    var rider = $('rider'); rider.setAttribute('width', T.rw); rider.setAttribute('height', T.rh);
+    $('w1').style.cssText = 'top:' + Math.round(sea + 9 * k) + 'px;background:repeating-linear-gradient(90deg,rgba(244,239,230,.55) 0 16px,transparent 16px 54px)';
+    $('w2').style.cssText = 'top:' + Math.round(sea + 22 * k) + 'px;background:repeating-linear-gradient(90deg,rgba(244,239,230,.35) 0 10px,transparent 10px 70px)';
+    update();
+  }
+
+  function leg(hip, foot) {
+    var L = 26, dx = foot[0] - hip[0], dy = foot[1] - hip[1], dist = Math.hypot(dx, dy) || 1;
+    var d = Math.min(dist, 2 * L - 0.01), h = Math.sqrt(L * L - d * d / 4);
+    var mx = (hip[0] + foot[0]) / 2, my = (hip[1] + foot[1]) / 2, nx = -dy / dist, ny = dx / dist;
+    var s = nx >= 0 ? 1 : -1;
+    return hip.join(',') + ' ' + f(mx + s * nx * h) + ',' + f(my + s * ny * h) + ' ' + f(foot[0]) + ',' + f(foot[1]);
+  }
+  var shift = function (el, left, speed, period) { el.style.transform = 'translate3d(' + (-((left * speed) % period)).toFixed(1) + 'px,0,0)'; };
+
+  function update() {
+    var left = scroller.scrollLeft, max = Math.max(1, scroller.scrollWidth - scroller.clientWidth);
+    var p = Math.min(1, Math.max(0, left / max)), cw = scroller.clientWidth;
+    shift($('lFar'), left, 0.12, PF); shift($('lSea'), left, 0.25, PS); shift($('lForest'), left, 0.5, PFo); shift($('lRoad'), left, 1, PR);
+    $('w1').style.backgroundPositionX = (-left * 0.28).toFixed(1) + 'px';
+    $('w2').style.backgroundPositionX = (-left * 0.33 + 20).toFixed(1) + 'px';
+    var sx = p * Math.max(0, cw - T.rw), wx = left + sx + T.rw * 0.48, y = roadY(wx), s = T.rw / 120;
+    var ang = Math.atan2(roadY(wx + 22) - roadY(wx - 22), 44) * 180 / Math.PI;
+    $('rider').style.transform = 'translate(' + sx.toFixed(1) + 'px,' + (y - 74 * s - 3 * T.k).toFixed(1) + 'px) rotate(' + ang.toFixed(1) + 'deg)';
+    var a = left * 1.1 * Math.PI / 180, wheel = (left * 1.1) % 360;
+    $('spk1').setAttribute('transform', 'rotate(' + wheel.toFixed(1) + ' 24 56)');
+    $('spk2').setAttribute('transform', 'rotate(' + wheel.toFixed(1) + ' 92 56)');
+    $('legF').setAttribute('points', leg([44, 26], [50 + 10 * Math.cos(a), 56 + 10 * Math.sin(a)]));
+    $('legB').setAttribute('points', leg([44, 26], [50 - 10 * Math.cos(a), 56 - 10 * Math.sin(a)]));
+    markNav();
+  }
+
+  var ticking = false;
+  scroller.addEventListener('scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { ticking = false; update(); });
+  }, { passive: true });
+  var lastPhone = null;
+  window.addEventListener('resize', function () {
+    var phone = window.innerWidth <= 760;
+    if (phone !== lastPhone) { lastPhone = phone; build(); } else update();
+  });
+
+  render();
+  lastPhone = window.innerWidth <= 760;
+  build();
+})();
+</script>
+</body>
+</html>
