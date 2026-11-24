@@ -100,6 +100,14 @@ h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
 .track svg.layer{position:absolute;left:0;top:0;will-change:transform}
 .track .wave{position:absolute;left:0;right:0;height:2px}
 #rider{position:absolute;left:0;top:0;transform-origin:48% 92.5%}
+.track{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.track.dragging{cursor:grabbing}
+.rail{position:absolute;left:12px;right:12px;top:8px;height:4px;border-radius:2px;background:rgba(27,25,23,.18)}
+.rail i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--red)}
+.drag-hint{position:absolute;top:0;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--ink);color:#fff;font:800 12px var(--display);letter-spacing:.05em;text-transform:uppercase;pointer-events:none;transition:opacity .4s;animation:nudge 1.4s ease-in-out infinite}
+.drag-hint.gone{opacity:0}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){.drag-hint{animation:none}}
 
 /* phone */
 @media (max-width:760px){
@@ -233,7 +241,8 @@ h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
 
 </main>
 
-<div class="track" aria-hidden="true">
+<div class="track" id="track" aria-hidden="true">
+  <div class="rail"><i id="railFill"></i></div>
   <svg class="layer" id="lFar"></svg>
   <div class="sea"></div>
   <div class="wave" id="w1"></div>
@@ -260,6 +269,7 @@ h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
     <line x1="38" y1="31" x2="50" y2="31" stroke="#1B1917" stroke-width="4" stroke-linecap="round"/>
     <circle cx="71" cy="6" r="5.5" fill="#F4EFE6" stroke="#1B1917" stroke-width="1.5"/>
   </svg>
+  <div class="drag-hint" id="dragHint"><span id="dragHintText"></span> <span aria-hidden="true">→</span></div>
 </div>
 
 </div>
@@ -393,6 +403,7 @@ const COPY = {
   var scroller = $('hscroll');
   var LANGS = ['me', 'en', 'ru'];
   var HTML_LANG = { me: 'cnr', en: 'en', ru: 'ru' };
+  var DRAG = { me: 'Povucite', en: 'Drag me', ru: 'Тяните' };
   var lang = 'me';
   try { var saved = localStorage.getItem('emtboka-lang'); if (LANGS.indexOf(saved) >= 0) lang = saved; } catch (e) {}
 
@@ -404,6 +415,7 @@ const COPY = {
   function render() {
     var c = COPY[lang];
     document.documentElement.lang = HTML_LANG[lang];
+    $('dragHintText').textContent = DRAG[lang];
     document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = c[el.getAttribute('data-t')]; });
     $('nav').innerHTML = c.nav.map(function (n, i) { return '<button class="nb" type="button" data-go="' + i + '">' + esc(n) + '</button>'; }).join('');
     $('routeList').innerHTML = c.routes.map(function (r, i) {
@@ -554,8 +566,55 @@ const COPY = {
     $('spk2').setAttribute('transform', 'rotate(' + wheel.toFixed(1) + ' 92 56)');
     $('legF').setAttribute('points', leg([44, 26], [50 + 10 * Math.cos(a), 56 + 10 * Math.sin(a)]));
     $('legB').setAttribute('points', leg([44, 26], [50 - 10 * Math.cos(a), 56 - 10 * Math.sin(a)]));
+    $('railFill').style.width = (p * 100).toFixed(1) + '%';
+    var hint = $('dragHint');
+    hint.style.left = Math.min(sx + T.rw + 4, cw - hint.offsetWidth - 8) + 'px';
+    hint.style.top = Math.max(16, y - 74 * s - 3 * T.k + T.rh * 0.25) + 'px';
     markNav();
   }
+
+  /* drag the cyclist (or anywhere on the road strip) to move through the site */
+  var track = $('track'), drag = null;
+  function hideHint() { $('dragHint').classList.add('gone'); }
+  track.addEventListener('pointerdown', function (e) {
+    if (e.button !== undefined && e.button !== 0) return;
+    drag = { id: e.pointerId, x0: e.clientX, left0: scroller.scrollLeft, moved: false };
+    try { track.setPointerCapture(e.pointerId); } catch (err) {}
+    track.classList.add('dragging');
+  });
+  track.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.x0;
+    if (!drag.moved && Math.abs(dx) < 6) return;
+    if (!drag.moved) { drag.moved = true; scroller.style.scrollSnapType = 'none'; scroller.style.scrollBehavior = 'auto'; hideHint(); }
+    var max = Math.max(1, scroller.scrollWidth - scroller.clientWidth);
+    var span = Math.max(1, scroller.clientWidth - T.rw);
+    scroller.scrollLeft = Math.max(0, Math.min(max, drag.left0 + dx / span * max));
+    e.preventDefault();
+  });
+  function endDrag(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var d = drag; drag = null;
+    track.classList.remove('dragging');
+    var cw = scroller.clientWidth, n = scroller.children.length;
+    if (!d.moved) {
+      // tap: right of the cyclist = next section, left of it = previous
+      var r = $('rider').getBoundingClientRect();
+      var cur = Math.round(scroller.scrollLeft / cw);
+      goTo(Math.max(0, Math.min(n - 1, cur + (e.clientX >= r.left + r.width * 0.3 ? 1 : -1))));
+      hideHint();
+      return;
+    }
+    var frac = scroller.scrollLeft / cw, dir = scroller.scrollLeft - d.left0;
+    var target = dir > 0 ? Math.ceil(frac - 0.25) : Math.floor(frac + 0.25);
+    target = Math.max(0, Math.min(n - 1, target));
+    scroller.style.scrollBehavior = '';
+    goTo(target);
+    setTimeout(function () { if (!drag) scroller.style.scrollSnapType = ''; }, 700);
+  }
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+  scroller.addEventListener('scroll', function () { if (scroller.scrollLeft > 20) hideHint(); }, { passive: true });
 
   var ticking = false;
   scroller.addEventListener('scroll', function () {
