@@ -50,25 +50,28 @@ a:focus-visible,button:focus-visible,#hscroll:focus-visible{outline:3px solid va
 .book a:focus-visible{outline-color:#fff}
 
 /* horizontal panels */
-#hscroll{flex:1 1 auto;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--red) var(--sand);overscroll-behavior-x:contain}
-.panel{flex:0 0 100%;scroll-snap-align:start;padding:40px var(--pad);display:flex;flex-direction:column;justify-content:center;gap:28px;overflow-y:auto}
+#hscroll{flex:1 1 auto;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+/* no scrollbars: the red line above the road shows progress */
+#hscroll::-webkit-scrollbar,.panel::-webkit-scrollbar{display:none;width:0;height:0}
+.panel{flex:0 0 100%;min-width:0;scroll-snap-align:start;padding:clamp(16px,4vh,40px) var(--pad);display:flex;flex-direction:column;justify-content:center;gap:clamp(12px,3vh,28px);overflow-y:auto;scrollbar-width:none}
 .alt{background:var(--sand)}
 .row{display:flex;align-items:center;gap:48px}
 .row>*{flex:1 1 0;min-width:0}
 .kicker{margin:0 0 12px;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
-h1{font-size:clamp(36px,5vw,64px);line-height:1.03;letter-spacing:-.01em;margin-bottom:20px}
-h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
-.sub{margin:0 0 28px;max-width:500px;color:var(--muted);font-size:18px}
+h1{font-size:clamp(28px,min(5vw,7.5vh),64px);line-height:1.03;letter-spacing:-.01em;margin-bottom:clamp(8px,2vh,20px)}
+h2{font-size:clamp(24px,min(3.2vw,5.5vh),40px);line-height:1.1}
+.sub{margin:0 0 clamp(12px,3vh,28px);max-width:500px;color:var(--muted);font-size:18px}
 .muted{color:var(--muted)}
 .ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .hint{color:var(--muted);font-size:15px}
-.hero-img{height:100%;max-height:460px;width:100%;object-fit:cover;object-position:50% 72%;border-radius:12px;border:3px solid var(--ink)}
+.hero .row{flex:1 1 auto;min-height:0;max-height:480px}
+.hero-img{height:100%;max-height:460px;min-height:0;width:100%;object-fit:cover;object-position:50% 72%;border-radius:12px;border:3px solid var(--ink)}
 .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .card{background:var(--card);border-radius:12px;overflow:hidden}
-.route img{width:100%;height:150px;object-fit:cover}
-.route div{padding:16px 18px 20px}
+.route img{width:100%;height:clamp(70px,17vh,150px);object-fit:cover}
+.route div{padding:clamp(8px,1.8vh,16px) 16px clamp(10px,2vh,20px)}
 .num{font:800 22px var(--display);color:var(--red)}
 .route h3{font-size:16px;line-height:1.2;margin:2px 0 6px}
 .route p{margin:0;color:var(--muted);font-size:14px}
@@ -78,15 +81,16 @@ h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
 .bike h3{font-size:22px}
 .bike .kind{margin:2px 0 16px;color:var(--muted);font-size:15px}
 .prices{display:flex;flex-wrap:wrap;gap:8px 24px;margin-bottom:16px}
-.price{font:800 44px/1 var(--display);color:var(--red)}
-.big .price{font-size:56px}
+.price{font:800 clamp(30px,6vh,44px)/1 var(--display);color:var(--red)}
+.big .price{font-size:clamp(36px,7.5vh,56px)}
 .plabel{color:var(--muted);font-size:14px}
-.sup-img{width:100%;height:400px;object-fit:cover;border-radius:12px}
+.sup .row{flex:1 1 auto;min-height:0;max-height:420px}
+.sup-img{width:100%;height:100%;max-height:400px;object-fit:cover;border-radius:12px}
 .why{border-top:3px solid var(--red);padding-top:16px}
 .why h3{font-size:18px;margin:6px 0}
 .why p{margin:0;color:var(--muted);font-size:16px}
 .book{background:var(--red);color:#fff}
-.step .n{font:800 56px/1 var(--display)}
+.step .n{font:800 clamp(36px,7.5vh,56px)/1 var(--display)}
 .step h3{font-size:18px;margin:6px 0}
 .step p{margin:0}
 .map{width:100%;min-height:220px;height:100%;border:2px solid var(--line);border-radius:12px}
@@ -117,16 +121,18 @@ h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
   .nav{display:none}
   .right{gap:8px}
   .top .btn{min-height:44px;padding:0 10px}
-  .panel{padding:20px;gap:14px;justify-content:flex-start}
+  .panel{padding:clamp(12px,2.4vh,20px) 20px;gap:clamp(8px,1.6vh,14px);justify-content:flex-start}
   .row{flex-direction:column;align-items:stretch;gap:14px}
   .hero .row{flex-direction:column-reverse}
-  .hero-img{height:210px;flex:0 0 auto}
+  .hero .row{max-height:none;flex:0 0 auto}
+  .hero-img{height:clamp(100px,21vh,210px);flex:0 0 auto}
   .sub{font-size:16px;margin-bottom:14px}
-  h1{margin-bottom:10px}
+  h1{margin-bottom:10px;font-size:clamp(24px,min(9vw,4.6vh),36px)}
+  h2{font-size:clamp(22px,min(7vw,4vh),28px)}
   .grid4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .grid3{grid-template-columns:1fr;gap:14px}
   .grid2{grid-template-columns:1fr;gap:12px}
-  .route img{height:96px}
+  .route img{height:clamp(56px,10vh,96px)}
   .route div{padding:10px 12px 12px}
   .route h3{font-size:13px}
   .route p{font-size:12px;line-height:1.35}
@@ -139,7 +145,8 @@ h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
   .big .price{font-size:40px}
   .prices{margin-bottom:10px}
   .bike .btn{min-height:44px;padding:6px 10px;font-size:11px;white-space:normal;text-align:center;width:100%;letter-spacing:.03em}
-  .sup-img{height:200px}
+  .sup .row{max-height:none;flex:0 0 auto}
+  .sup-img{height:clamp(110px,24vh,200px)}
   .why h3{font-size:15px}
   .why p{font-size:14px;line-height:1.4}
   .step{display:flex;gap:14px;align-items:flex-start}
@@ -198,7 +205,7 @@ h2{font-size:clamp(28px,3.2vw,40px);line-height:1.1}
     <div class="grid2" id="bikeList"></div>
   </section>
 
-  <section class="panel alt" id="sup">
+  <section class="panel alt sup" id="sup">
     <div class="row">
       <div>
         <h2 data-t="supTitle"></h2>
