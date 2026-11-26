@@ -874,7 +874,7 @@ const COPY = {
     $('fDate').min = today; if (!$('fDate').value || $('fDate').value < today) $('fDate').value = '';
     var send = $('bfSend'); send.className = 'btn send ' + msg;
     send.innerHTML = svg(msg) + '<span>' + esc(b.send) + ' ' + MSG_NAME[msg] + '</span>';
-    $('bfNote').textContent = msg === 'wa' ? b.noteWa : b.noteCopy;
+    $('bfNote').textContent = msg === 'vb' ? b.noteCopy : b.noteWa.replace('WhatsApp', MSG_NAME[msg]);
     $('bfX').setAttribute('aria-label', c.close);
     ['eDate', 'eTime', 'eAddr'].forEach(function (id) { $(id).textContent = ''; $(id).parentNode.classList.remove('bad'); });
     $('addrWrap').hidden = !$('fDel').checked;
@@ -911,8 +911,9 @@ const COPY = {
     if (BF.route != null) lines.splice(2, 0, b.mRoute + ': ' + c.routes[BF.route][0]);
     var text = lines.join('\n');
     if (BF.msg === 'wa') { window.open(WA + '?text=' + encodeURIComponent(text), '_blank'); }
+    else if (BF.msg === 'tg') { window.open(TG + '?text=' + encodeURIComponent(text), '_blank'); }
     else {
-      var go = function () { window.location.href = BF.msg === 'vb' ? VB : TG; };
+      var go = function () { window.location.href = VB; };
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(go, go); else go();
       $('bfNote').textContent = b.copied;
     }
