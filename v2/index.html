@@ -270,13 +270,42 @@ body.lock .track{pointer-events:none}
 .lb .x{top:14px;right:14px}.lb .pv{left:14px;top:50%;transform:translateY(-50%)}.lb .nx{right:14px;top:50%;transform:translateY(-50%)}
 @media (max-width:600px){.lb{padding:60px 8px}.lb .pv,.lb .nx{top:auto;bottom:14px;transform:none}}
 
-/* road with cyclist (night) */
-.track{height:var(--track);flex:0 0 var(--track);position:relative;overflow:hidden;border-top:1px solid var(--line);background:linear-gradient(#0d1014,#1a2330 42%);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+/* booking form */
+[hidden]{display:none!important}
+.bf{position:absolute;left:50%;top:50%;transform:translate(-50%,-46%) scale(.97);opacity:0;transition:transform .45s var(--ease),opacity .3s;width:min(560px,94vw);max-height:94vh;overflow-y:auto;background:var(--slate);border:1px solid var(--line-2);border-radius:22px;padding:clamp(20px,3vw,32px);box-shadow:0 40px 120px rgba(0,0,0,.6)}
+.ov.show .bf{transform:translate(-50%,-50%);opacity:1}
+.bf .x{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-2);color:var(--text)}
+.bf .x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.bf h3{font-size:clamp(24px,3vw,32px);margin:8px 50px 4px 0}
+.bf-route{color:var(--muted);font-size:15px;min-height:4px}
+.bf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 14px;margin:16px 0 20px}
+.bf .wide{grid-column:1/-1}
+.f{display:flex;flex-direction:column;gap:6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.f input,.f select{font:400 16px var(--sans);letter-spacing:0;text-transform:none;color:var(--text);background:#121211;border:1px solid var(--line-2);border-radius:12px;min-height:48px;padding:0 14px;width:100%;color-scheme:dark}
+.f input:focus,.f select:focus{outline:2px solid var(--red-2);outline-offset:1px}
+.f.bad input{border-color:var(--red-2)}
+.err{font-style:normal;font-size:12.5px;letter-spacing:0;text-transform:none;color:#ff8a82;min-height:0}
+.chk{display:flex;align-items:center;gap:12px;cursor:pointer;font-size:16px;min-height:44px}
+.chk input{position:absolute;opacity:0;width:1px;height:1px}
+.chk .box{width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line-2);display:grid;place-items:center;flex:none;transition:.2s}
+.chk .box::after{content:"";width:11px;height:6px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px);opacity:0}
+.chk input:checked+.box{background:var(--red);border-color:var(--red)}
+.chk input:checked+.box::after{opacity:1}
+.chk input:focus-visible+.box{outline:2px solid var(--red-2);outline-offset:2px}
+.bf .send{width:100%;min-height:54px;color:#fff;gap:10px}
+.bf .send svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bf .send.wa{background:#1F9D55}.bf .send.vb{background:#6F4BC4}.bf .send.tg{background:#2A8BC9}
+.bf .send:hover{filter:brightness(1.1)}
+.bf-note{margin-top:10px;color:var(--muted);font-size:13.5px;text-align:center}
+@media (max-width:560px){.bf{top:auto;bottom:0;left:0;width:100%;transform:translateY(30px);border-radius:22px 22px 0 0;max-height:92vh}.ov.show .bf{transform:none}.bf-grid{gap:10px}}
+
+/* road with cyclist (day) */
+.track{height:var(--track);flex:0 0 var(--track);position:relative;overflow:hidden;border-top:1px solid var(--line);background:linear-gradient(#3e5f85,#93aecb 42%);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 .track.dragging{cursor:grabbing}
-.track .sea{position:absolute;left:0;right:0;top:42%;bottom:0;background:linear-gradient(#18344f,#0e2234)}
+.track .sea{position:absolute;left:0;right:0;top:42%;bottom:0;background:linear-gradient(#2d5d8c,#21476c)}
 .track svg.layer{position:absolute;left:0;top:0;will-change:transform}
 .track .wave{position:absolute;left:0;right:0;height:2px}
-.track .moon{position:absolute;right:9%;top:12px;width:16px;height:16px;border-radius:50%;background:#efe6cf;box-shadow:0 0 18px 4px rgba(239,230,207,.35)}
+.track .moon{position:absolute;right:9%;top:14px;width:22px;height:22px;border-radius:50%;background:#fff3d2;box-shadow:0 0 26px 10px rgba(255,243,210,.45)}
 #rider{position:absolute;left:0;top:0;transform-origin:48% 92.5%;z-index:3}
 .rail{position:absolute;left:12px;right:12px;top:8px;height:3px;border-radius:2px;background:rgba(255,255,255,.12);z-index:4}
 .rail i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--red-2)}
@@ -382,9 +411,9 @@ body.lock .track{pointer-events:none}
       <p class="sub rise d2" data-t="heroSub"></p>
       <div class="ctas rise d3">
         <div class="bx" data-item="">
-          <a class="opt wa" data-msg="wa" href="https://wa.me/38267548889"><svg><use href="#i-wa"/></svg><span>WhatsApp</span></a>
-          <a class="opt vb" href="viber://chat?number=%2B38269546547"><svg><use href="#i-vb"/></svg><span>Viber</span></a>
-          <a class="opt tg" href="https://t.me/+38269546547"><svg><use href="#i-tg"/></svg><span>Telegram</span></a>
+          <a class="opt wa" data-book="wa" href="https://wa.me/38267548889"><svg><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+          <a class="opt vb" data-book="vb" href="viber://chat?number=%2B38269546547"><svg><use href="#i-vb"/></svg><span>Viber</span></a>
+          <a class="opt tg" data-book="tg" href="https://t.me/+38269546547"><svg><use href="#i-tg"/></svg><span>Telegram</span></a>
           <button class="btn btn-red bx-btn" type="button" aria-expanded="false" data-t="ctaBook"></button>
         </div>
         <button class="btn btn-ghost" type="button" data-go="3"><span data-t="ctaRoutes"></span><svg><use href="#i-arrow"/></svg></button>
@@ -438,9 +467,9 @@ body.lock .track{pointer-events:none}
     <div><p class="label" data-t="bookLabel"></p><h2 data-t="bookTitle"></h2></div>
     <div class="steps" id="stepList"></div>
     <div class="bigmsg">
-      <a class="wa" data-msg="wa" href="https://wa.me/38267548889"><svg><use href="#i-wa"/></svg>WhatsApp</a>
-      <a class="vb" href="viber://chat?number=%2B38269546547"><svg><use href="#i-vb"/></svg>Viber</a>
-      <a class="tg" href="https://t.me/+38269546547"><svg><use href="#i-tg"/></svg>Telegram</a>
+      <a class="wa" data-book="wa" href="https://wa.me/38267548889"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+      <a class="vb" data-book="vb" href="viber://chat?number=%2B38269546547"><svg><use href="#i-vb"/></svg>Viber</a>
+      <a class="tg" data-book="tg" href="https://t.me/+38269546547"><svg><use href="#i-tg"/></svg>Telegram</a>
     </div>
     <p class="hours"><svg><use href="#i-clock"/></svg><span data-t="bookHours"></span></p>
   </section>
@@ -520,6 +549,28 @@ body.lock .track{pointer-events:none}
   </div>
 </div>
 
+<!-- booking form -->
+<div class="ov" id="bookOv" role="dialog" aria-modal="true" aria-labelledby="bfTitle">
+  <div class="scrim" data-close-book></div>
+  <form class="bf" id="bf" novalidate>
+    <button class="x" type="button" data-close-book id="bfX"><svg><use href="#i-x"/></svg></button>
+    <p class="label" id="bfLabel"></p>
+    <h3 id="bfTitle"></h3>
+    <p class="bf-route" id="bfRoute"></p>
+    <div class="bf-grid">
+      <label class="f wide"><span id="lWhat"></span><select id="fWhat"></select></label>
+      <label class="f"><span id="lCount"></span><select id="fCount"></select></label>
+      <label class="f"><span id="lDur"></span><select id="fDur"></select></label>
+      <label class="f"><span id="lDate"></span><input type="date" id="fDate" required><em class="err" id="eDate"></em></label>
+      <label class="f"><span id="lTime"></span><input type="time" id="fTime" min="08:00" max="20:00" step="900" value="10:00" required><em class="err" id="eTime"></em></label>
+      <label class="chk wide"><input type="checkbox" id="fDel"><span class="box" aria-hidden="true"></span><span id="lDel"></span></label>
+      <label class="f wide" id="addrWrap" hidden><span id="lAddr"></span><input type="text" id="fAddr" autocomplete="street-address"><em class="err" id="eAddr"></em></label>
+    </div>
+    <button class="btn send" type="submit" id="bfSend"></button>
+    <p class="bf-note" id="bfNote"></p>
+  </form>
+</div>
+
 <!-- lightbox -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <img id="lbImg" alt="">
@@ -531,6 +582,10 @@ body.lock .track{pointer-events:none}
 <script>
 const COPY = {
   me: {
+    bf: { label: 'Rezervacija', title: 'Zahtjev za rezervaciju', sub: 'Popunite polja — poruka će biti spremna za slanje.', what: 'Šta rezervišete', count: 'Koliko', dur: 'Trajanje', date: 'Datum', time: 'Do koliko sati', delivery: 'Potrebna je dostava do hotela', addr: 'Adresa ili hotel', addrPh: 'npr. Hotel Kamelija, Donja Lastva', send: 'Pošalji preko', severalDays: 'Nekoliko dana',
+      noteWa: 'Otvoriće se WhatsApp sa gotovom porukom.', noteCopy: 'Tekst zahtjeva ćemo kopirati — zalijepite ga u chat.', copied: 'Tekst je kopiran — zalijepite ga u chat.',
+      errDate: 'Izaberite datum', errTime: 'Navedite vrijeme od 08:00 do 20:00', errAddr: 'Navedite adresu dostave',
+      hi: 'Zdravo! Želim da rezervišem:', mWhat: 'Šta', mRoute: 'Ruta', mDate: 'Datum', mTime: 'do', mDur: 'Trajanje', mDel: 'Dostava', yes: 'da', no: 'ne' },
     nav: ['O nama', 'Najam', 'Rute', 'Galerija', 'Usluge', 'Kontakt'],
     heroLabel: 'Iznajmljivanje e-bicikala i SUP dasaka · Tivat',
     heroTitle: 'Duže rute. Manje napora.',
@@ -583,6 +638,10 @@ const COPY = {
     drag: 'Povucite', close: 'Zatvori', waText: 'Zdravo! Želim da rezervišem'
   },
   en: {
+    bf: { label: 'Booking', title: 'Booking request', sub: 'Fill in the fields — your message will be ready to send.', what: 'What to book', count: 'How many', dur: 'Duration', date: 'Date', time: 'Ready by', delivery: 'I need delivery to my hotel', addr: 'Address or hotel', addrPh: 'e.g. Hotel Kamelija, Donja Lastva', send: 'Send via', severalDays: 'Several days',
+      noteWa: 'WhatsApp will open with your message ready.', noteCopy: 'We will copy your request — paste it into the chat.', copied: 'Request copied — paste it into the chat.',
+      errDate: 'Choose a date', errTime: 'Enter a time between 08:00 and 20:00', errAddr: 'Enter the delivery address',
+      hi: 'Hi! I would like to book:', mWhat: 'What', mRoute: 'Route', mDate: 'Date', mTime: 'by', mDur: 'Duration', mDel: 'Delivery', yes: 'yes', no: 'no' },
     nav: ['About', 'Rental', 'Routes', 'Gallery', 'Services', 'Contact'],
     heroLabel: 'E-bike and SUP rental · Tivat',
     heroTitle: 'Bigger routes. Less effort.',
@@ -635,6 +694,10 @@ const COPY = {
     drag: 'Drag me', close: 'Close', waText: 'Hi! I would like to book'
   },
   ru: {
+    bf: { label: 'Бронь', title: 'Заявка на бронь', sub: 'Заполните поля — сообщение будет готово к отправке.', what: 'Что бронируете', count: 'Сколько', dur: 'На сколько', date: 'Дата', time: 'К какому времени', delivery: 'Нужна доставка к отелю', addr: 'Адрес или отель', addrPh: 'например, Hotel Kamelija, Donja Lastva', send: 'Отправить в', severalDays: 'Несколько дней',
+      noteWa: 'Откроется WhatsApp с готовым сообщением.', noteCopy: 'Мы скопируем текст заявки — вставьте его в чат.', copied: 'Текст скопирован — вставьте его в чат.',
+      errDate: 'Выберите дату', errTime: 'Укажите время с 08:00 до 20:00', errAddr: 'Укажите адрес доставки',
+      hi: 'Здравствуйте! Хочу забронировать:', mWhat: 'Что', mRoute: 'Маршрут', mDate: 'Дата', mTime: 'к', mDur: 'На сколько', mDel: 'Доставка', yes: 'да', no: 'нет' },
     nav: ['О нас', 'Прокат', 'Маршруты', 'Галерея', 'Услуги', 'Контакты'],
     heroLabel: 'Прокат электробайков и SUP · Тиват',
     heroTitle: 'Больше маршрутов. Меньше усилий.',
@@ -707,8 +770,9 @@ const COPY = {
 
   var C = function () { return COPY[lang]; };
   function waLink(what) { return WA + '?text=' + encodeURIComponent(C().waText + (what ? ': ' + what : '')); }
-  function msgButtons(what) {
-    return '<div class="bigmsg"><a class="wa" href="' + waLink(what) + '">' + svg('wa') + 'WhatsApp</a><a class="vb" href="' + VB + '">' + svg('vb') + 'Viber</a><a class="tg" href="' + TG + '">' + svg('tg') + 'Telegram</a></div>';
+  function msgButtons(item, route) {
+    var a = ' data-item="' + item + '"' + (route != null ? ' data-route-i="' + route + '"' : '');
+    return '<div class="bigmsg"><a class="wa" data-book="wa"' + a + ' href="' + WA + '">' + svg('wa') + 'WhatsApp</a><a class="vb" data-book="vb"' + a + ' href="' + VB + '">' + svg('vb') + 'Viber</a><a class="tg" data-book="tg"' + a + ' href="' + TG + '">' + svg('tg') + 'Telegram</a></div>';
   }
 
   /* ---------- static strips (built once) ---------- */
@@ -776,14 +840,83 @@ const COPY = {
       '<div class="list"><p class="lead2">' + esc(it.line) + '</p><h4>' + esc(c.pricesT) + '</h4>' +
       it.prices.map(function (p) { return '<div class="prow"><span>' + esc(p[0]) + '</span><b>' + esc(p[1]) + '</b></div>'; }).join('') +
       '<h4>' + esc(c.incl) + '</h4><ul>' + it.details.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul><p class="note">' + esc(c.inclNote) + '</p>' +
-      '<h4>' + esc(c.bookVia) + '</h4>' + msgButtons(it.name) + '</div>');
+      '<h4>' + esc(c.bookVia) + '</h4>' + msgButtons(i) + '</div>');
   }
   function routeSheet(i) {
     var c = C(), r = c.routes[i];
     openSheet('<div class="cover"><img src="' + ROUTE_IMG[i] + '" alt=""><div class="ttl"><small>' + esc(c.routesLabel) + ' · 0' + (i + 1) + '</small><h3 id="sheetTitle">' + esc(r[0]) + '</h3></div></div>' +
       '<div class="list"><p class="lead2">' + esc(r[1]) + '</p><p class="note">' + esc(i === 5 ? c.loopMeta : c.routeMeta) + '</p>' +
-      '<h4>' + esc(c.bookRoute) + '</h4>' + msgButtons(r[0]) + '</div>');
+      '<h4>' + esc(c.bookRoute) + '</h4>' + msgButtons(0, i) + '</div>');
   }
+
+  /* ---------- booking form ---------- */
+  var BF = { msg: 'wa', route: null };
+  var MSG_NAME = { wa: 'WhatsApp', vb: 'Viber', tg: 'Telegram' };
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function fillDur() {
+    var c = C(), it = c.items[+$('fWhat').value];
+    var opts = it.prices.map(function (p) { return p[0]; });
+    if (it.key !== 'sup') opts.push(c.bf.severalDays);
+    $('fDur').innerHTML = opts.map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('');
+  }
+  function openBook(msg, item, route) {
+    var c = C(), b = c.bf;
+    BF.msg = msg; BF.route = route;
+    $('bfLabel').textContent = b.label; $('bfTitle').textContent = b.title;
+    $('bfRoute').textContent = route != null ? c.routesLabel + ': ' + c.routes[route][0] : b.sub;
+    $('lWhat').textContent = b.what; $('lCount').textContent = b.count; $('lDur').textContent = b.dur;
+    $('lDate').textContent = b.date; $('lTime').textContent = b.time; $('lDel').textContent = b.delivery; $('lAddr').textContent = b.addr;
+    $('fAddr').placeholder = b.addrPh;
+    $('fWhat').innerHTML = c.items.map(function (it, i) { return '<option value="' + i + '">' + esc(it.name) + '</option>'; }).join('');
+    $('fWhat').value = String(item || 0); fillDur();
+    $('fCount').innerHTML = [1, 2, 3, 4, 5, 6, 7, 8].map(function (n) { return '<option>' + n + '</option>'; }).join('');
+    var d = new Date(), today = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+    $('fDate').min = today; if (!$('fDate').value || $('fDate').value < today) $('fDate').value = '';
+    var send = $('bfSend'); send.className = 'btn send ' + msg;
+    send.innerHTML = svg(msg) + '<span>' + esc(b.send) + ' ' + MSG_NAME[msg] + '</span>';
+    $('bfNote').textContent = msg === 'wa' ? b.noteWa : b.noteCopy;
+    $('bfX').setAttribute('aria-label', c.close);
+    ['eDate', 'eTime', 'eAddr'].forEach(function (id) { $(id).textContent = ''; $(id).parentNode.classList.remove('bad'); });
+    $('addrWrap').hidden = !$('fDel').checked;
+    lastFocus = document.activeElement;
+    var ov = $('bookOv'); ov.classList.add('open'); document.body.classList.add('lock');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { ov.classList.add('show'); }); });
+    setTimeout(function () { $('fDate').focus({ preventScroll: true }); }, 80);
+  }
+  function closeBook() {
+    var ov = $('bookOv'); if (!ov.classList.contains('open')) return;
+    ov.classList.remove('show');
+    if (!$('sheetOv').classList.contains('open')) document.body.classList.remove('lock');
+    setTimeout(function () { ov.classList.remove('open'); }, 350);
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
+  }
+  $('fWhat').addEventListener('change', fillDur);
+  $('fDel').addEventListener('change', function () { $('addrWrap').hidden = !this.checked; if (this.checked) $('fAddr').focus(); });
+  ['fDate', 'fTime', 'fAddr'].forEach(function (id) { $(id).addEventListener('input', function () { var e = $('e' + id.slice(1)); e.textContent = ''; e.parentNode.classList.remove('bad'); }); });
+  function bad(id, txt) { var e = $(id); e.textContent = txt; e.parentNode.classList.add('bad'); return false; }
+  $('bf').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var c = C(), b = c.bf, ok = true, first = null;
+    var date = $('fDate').value, time = $('fTime').value, addr = $('fAddr').value.trim();
+    if (!date) { ok = bad('eDate', b.errDate); first = first || 'fDate'; }
+    if (!time || time < '08:00' || time > '20:00') { ok = bad('eTime', b.errTime); first = first || 'fTime'; }
+    if ($('fDel').checked && !addr) { ok = bad('eAddr', b.errAddr); first = first || 'fAddr'; }
+    if (!ok) { $(first).focus(); return; }
+    var p = date.split('-'), it = c.items[+$('fWhat').value];
+    var lines = [b.hi,
+      b.mWhat + ': ' + it.name + ' × ' + $('fCount').value,
+      b.mDate + ': ' + p[2] + '.' + p[1] + '.' + p[0] + ', ' + b.mTime + ' ' + time,
+      b.mDur + ': ' + $('fDur').value,
+      b.mDel + ': ' + ($('fDel').checked ? b.yes + ' — ' + addr : b.no)];
+    if (BF.route != null) lines.splice(2, 0, b.mRoute + ': ' + c.routes[BF.route][0]);
+    var text = lines.join('\n');
+    if (BF.msg === 'wa') { window.open(WA + '?text=' + encodeURIComponent(text), '_blank'); }
+    else {
+      var go = function () { window.location.href = BF.msg === 'vb' ? VB : TG; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(go, go); else go();
+      $('bfNote').textContent = b.copied;
+    }
+  });
 
   /* ---------- lightbox ---------- */
   var lbI = 0;
@@ -814,6 +947,9 @@ const COPY = {
     if (!t.closest('.bx')) closeAll();
     var l = t.closest('[data-lang]');
     if (l) { lang = l.getAttribute('data-lang'); try { localStorage.setItem('emtboka-lang', lang); } catch (err) {} render(); return; }
+    var bk = t.closest('[data-book]');
+    if (bk) { e.preventDefault(); closeAll(); openBook(bk.getAttribute('data-book'), +(bk.getAttribute('data-item') || 0), bk.hasAttribute('data-route-i') ? +bk.getAttribute('data-route-i') : null); return; }
+    if (t.closest('[data-close-book]')) { closeBook(); return; }
     var g = t.closest('[data-go]'); if (g) { e.preventDefault(); goTo(+g.getAttribute('data-go')); return; }
     var rc = t.closest('[data-rent]'); if (rc) { rentSheet(+rc.getAttribute('data-rent')); return; }
     var rt = t.closest('[data-route]'); if (rt) { routeSheet(+rt.getAttribute('data-route')); return; }
@@ -821,7 +957,7 @@ const COPY = {
     if (t.closest('[data-close-sheet]')) { closeSheet(); return; }
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { closeAll(); closeSheet(); lbClose(); }
+    if (e.key === 'Escape') { if ($('bookOv').classList.contains('open')) { closeBook(); return; } closeAll(); closeSheet(); lbClose(); }
     if ($('lb').classList.contains('open')) { if (e.key === 'ArrowLeft') $('lbP').click(); if (e.key === 'ArrowRight') $('lbN').click(); }
   });
   function goTo(i) { scroller.scrollTo({ left: i * scroller.clientWidth, behavior: 'smooth' }); }
@@ -886,7 +1022,7 @@ const COPY = {
     far += ' L' + 2 * PF + ' ' + (sea + 2) + ' Z';
     var lights = '';
     for (x = 20; x < PF; x += 37) if (hsh(x * 0.7) > 0.55) [x, x + PF].forEach(function (xx) { lights += 'M' + f(xx) + ' ' + f(sea - 1 - 3 * hsh(x)) + ' h1.6 v1.6 h-1.6 Z'; });
-    svgSet($('lFar'), 2 * PF, '<path d="' + far + '" fill="#232c36"/><path d="' + top + '" fill="#2f3a45"/><path d="' + lights + '" fill="#f0c96a" opacity=".85"/>');
+    svgSet($('lFar'), 2 * PF, '<path d="' + far + '" fill="#5f7385"/><path d="' + top + '" fill="#748899"/><path d="' + lights + '" fill="#f0c96a" opacity="0"/>');
 
     var sails = '', hulls = '';
     for (x0 = 120; x0 < PS; x0 += 260) {
@@ -912,7 +1048,7 @@ const COPY = {
         else { th = (10 + 10 * hsh(x0 + 7)) * k; trees += 'M' + f(x - th * .55) + ' ' + f(base) + ' L' + x + ' ' + f(base - th) + ' L' + f(x + th * .55) + ' ' + f(base) + ' Z'; }
       });
     }
-    svgSet($('lForest'), 2 * PFo, '<path d="' + hills + '" fill="#1c241c"/><path d="' + trees + '" fill="#121811"/>');
+    svgSet($('lForest'), 2 * PFo, '<path d="' + hills + '" fill="#3b5535"/><path d="' + trees + '" fill="#283d25"/>');
 
     var rd = '', wall = 'M0 ' + H, joints = '', lamps = '', heads = '', near = '', flw = '';
     for (x = 0; x <= 2 * PR; x += 16) {
@@ -934,14 +1070,14 @@ const COPY = {
       });
     }
     svgSet($('lRoad'), 2 * PR,
-      '<defs><radialGradient id="glow"><stop offset="0" stop-color="#f0c96a" stop-opacity=".45"/><stop offset="1" stop-color="#f0c96a" stop-opacity="0"/></radialGradient></defs>' +
-      '<path d="' + wall + '" fill="#2e2924"/><path d="' + joints + '" fill="none" stroke="#211d19" stroke-width="1.2"/>' +
-      '<path d="' + rd + '" fill="none" stroke="#3e4349" stroke-width="' + Math.max(7, Math.round(H / 16)) + '" stroke-linejoin="round"/>' +
+      '<defs><radialGradient id="glow"><stop offset="0" stop-color="#f0c96a" stop-opacity="0"/><stop offset="1" stop-color="#f0c96a" stop-opacity="0"/></radialGradient></defs>' +
+      '<path d="' + wall + '" fill="#8a785f"/><path d="' + joints + '" fill="none" stroke="#6f604c" stroke-width="1.2"/>' +
+      '<path d="' + rd + '" fill="none" stroke="#45494e" stroke-width="' + Math.max(7, Math.round(H / 16)) + '" stroke-linejoin="round"/>' +
       '<path d="' + rd + '" fill="none" stroke="#cfc8bc" stroke-width="1.4" stroke-dasharray="16 16" opacity=".8"/>' +
-      '<path d="' + near + '" fill="#0e120d"/><path d="' + flw + '" fill="#b5506f"/>' +
+      '<path d="' + near + '" fill="#1f3020"/><path d="' + flw + '" fill="#b5506f"/>' +
       '<path d="' + lamps + '" fill="none" stroke="#5a5650" stroke-width="2" stroke-linecap="round"/>' +
       [380, 1020, 1660, 2300, 2780, 3420, 4060, 4700].map(function (lx) { var ly = roadY(lx) - 4 * k - 38 * k; return '<circle cx="' + f(lx + 8.5 * k) + '" cy="' + f(ly + 3 * k) + '" r="' + f(22 * k) + '" fill="url(#glow)"/>'; }).join('') +
-      '<path d="' + heads + '" fill="#f0c96a"/>');
+      '<path d="' + heads + '" fill="#d9d4cc"/>');
 
     var rider = $('rider'); rider.setAttribute('width', T.rw); rider.setAttribute('height', T.rh);
     $('w1').style.cssText = 'top:' + Math.round(sea + 9 * k) + 'px;background:repeating-linear-gradient(90deg,rgba(242,238,231,.22) 0 16px,transparent 16px 54px)';
