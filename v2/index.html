@@ -80,10 +80,9 @@ h2{font-size:clamp(26px,min(3.6vw,6.4vh),52px);margin-top:12px}
 .rise{opacity:0;transform:translateY(20px);animation:rise 1s var(--ease) forwards}
 .rise.d1{animation-delay:.15s}.rise.d2{animation-delay:.3s}.rise.d3{animation-delay:.45s}
 @keyframes rise{to{opacity:1;transform:none}}
-.facts{position:absolute;left:0;right:0;bottom:0;z-index:1;border-top:1px solid var(--line);background:rgba(18,18,17,.6);backdrop-filter:blur(10px)}
+.facts{position:absolute;left:0;right:0;bottom:0;z-index:1;background:linear-gradient(180deg,transparent,rgba(12,12,11,.38));}
 .facts ul{list-style:none;display:grid;grid-template-columns:repeat(3,1fr)}
-.facts li{padding:14px 18px;display:flex;gap:10px;align-items:center;justify-content:center;font-size:14px;color:#ddd6ca;border-left:1px solid var(--line)}
-.facts li:first-child{border-left:0}
+.facts li{padding:14px 18px;display:flex;gap:10px;align-items:center;justify-content:center;font-size:14px;color:#efe9df;text-shadow:0 1px 10px rgba(0,0,0,.7)}
 .facts svg{width:19px;height:19px;color:var(--red-2);flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
 /* booking button that opens into three */
@@ -152,18 +151,6 @@ h2{font-size:clamp(26px,min(3.6vw,6.4vh),52px);margin-top:12px}
 .route .m{font-size:12.5px;color:#cfc8bc;margin-top:4px}
 .route:hover img{transform:scale(1.07)}
 .route:hover{border-color:rgba(224,68,63,.6)}
-
-/* stories + ribbon */
-.st-row{display:flex;gap:clamp(14px,2.6vw,30px);flex-wrap:wrap}
-.st{display:flex;flex-direction:column;align-items:center;gap:8px;width:clamp(72px,min(8vw,13vh),104px);font-size:13px;color:#ddd6ca;text-align:center;line-height:1.2}
-.st .ring{width:100%;aspect-ratio:1;border-radius:50%;padding:3px;background:conic-gradient(from 210deg,var(--red),#f0a35a,var(--red-2),var(--red));transition:transform .45s var(--ease)}
-.st .ring img{width:100%;height:auto;aspect-ratio:1;border-radius:50%;object-fit:cover;border:3px solid var(--slate)}
-.st:hover .ring{transform:scale(1.07) rotate(-4deg)}
-.ribbon{margin:0 calc(var(--pad) * -1);overflow:hidden;border-block:1px solid var(--line);background:rgba(10,10,10,.35)}
-.ribbon .strip{display:flex;gap:12px;padding:12px 0;width:max-content;animation:slide 70s linear infinite}
-.ribbon:hover .strip{animation-play-state:paused}
-.ribbon img{height:clamp(90px,18vh,200px);width:auto;aspect-ratio:4/5;object-fit:cover;border-radius:10px}
-@keyframes slide{to{transform:translateX(-50%)}}
 
 /* services */
 .svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
@@ -313,8 +300,8 @@ body.lock .track{pointer-events:none}
   .hero{justify-content:center;padding-bottom:150px}
   .hero .bx{width:220px}
   .facts ul{grid-template-columns:1fr}
-  .facts li{border-left:0;border-top:1px solid var(--line);padding:8px 16px;justify-content:flex-start;font-size:13px}
-  .facts li:first-child{border-top:0}
+  .facts li{padding:6px 16px;justify-content:flex-start;font-size:13px}
+  .facts{background:linear-gradient(180deg,transparent,rgba(12,12,11,.45) 40%)}
   .two{grid-template-columns:1fr;gap:16px}
   .collage{height:30vh;aspect-ratio:auto;width:100%}
   .collage .a{inset:0 28% 0 0}.collage .b{width:44%;height:70%}
@@ -343,7 +330,7 @@ body.lock .track{pointer-events:none}
   .info li{padding:7px 0}
   .head .lead{display:none}
 }
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rise{opacity:1;transform:none}.ribbon .strip{animation:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.rise{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -436,11 +423,10 @@ body.lock .track{pointer-events:none}
     <div class="routes" id="routeList"></div>
   </section>
 
-  <section class="panel" id="p-stories">
-    <div class="head"><div><p class="label" data-t="storiesLabel"></p><h2 data-t="storiesTitle"></h2></div>
-      <a class="btn btn-ghost" href="https://www.instagram.com/e_bike_tivat/"><svg><use href="#i-ig"/></svg><span data-t="openIg"></span></a></div>
-    <div class="st-row" id="stRow"></div>
-    <div class="ribbon" aria-hidden="true"><div class="strip" id="strip"></div></div>
+
+  <section class="panel" id="p-gallery">
+    <div class="head"><div><p class="label" data-t="galLabel"></p><h2 data-t="galTitle"></h2></div></div>
+    <div class="gal" id="gal"></div>
   </section>
 
   <section class="panel alt" id="p-services">
@@ -459,10 +445,6 @@ body.lock .track{pointer-events:none}
     <p class="hours"><svg><use href="#i-clock"/></svg><span data-t="bookHours"></span></p>
   </section>
 
-  <section class="panel" id="p-gallery">
-    <div class="head"><div><p class="label" data-t="galLabel"></p><h2 data-t="galTitle"></h2></div></div>
-    <div class="gal" id="gal"></div>
-  </section>
 
   <section class="panel alt" id="p-contact">
     <div class="two" style="align-items:stretch">
@@ -470,23 +452,23 @@ body.lock .track{pointer-events:none}
         <p class="label" data-t="contactLabel"></p>
         <h2 data-t="contactTitle" style="margin-bottom:clamp(8px,2vh,20px)"></h2>
         <ul class="info">
-          <li><svg><use href="#i-pin"/></svg><div><small data-t="addrL"></small><a href="https://maps.app.goo.gl/2aDaui1P1Jf38zRu6" data-t="addr"></a></div></li>
+          <li><svg><use href="#i-pin"/></svg><div><small data-t="addrL"></small><a href="https://www.google.com/maps?cid=10384446488102168967" data-t="addr"></a></div></li>
           <li><svg><use href="#i-clock"/></svg><div><small data-t="hoursL"></small><span data-t="hours"></span></div></li>
           <li><svg><use href="#i-wa"/></svg><div><small data-t="waL"></small><a data-msg="wa" href="https://wa.me/38267548889">+382 67 548 889</a></div></li>
           <li><svg><use href="#i-vb"/></svg><div><small data-t="vbL"></small><a href="viber://chat?number=%2B38269546547">+382 69 546 547</a></div></li>
           <li><svg><use href="#i-mail"/></svg><div><small data-t="mailL"></small><a href="mailto:ebiketivat@gmail.com">ebiketivat@gmail.com</a></div></li>
         </ul>
       </div>
-      <a class="mapcard" href="https://maps.app.goo.gl/2aDaui1P1Jf38zRu6">
+      <a class="mapcard" href="https://www.google.com/maps?cid=10384446488102168967">
         <img src="img/shop.jpg" alt="eMTBoka shop on the Donja Lastva waterfront" loading="lazy">
         <span class="pin"><span><b>eMTBoka</b><span data-t="mapSub"></span></span><span class="go"><svg><use href="#i-arrow"/></svg></span></span>
       </a>
     </div>
     <div class="bottom">
-      <p class="rating"><span class="stars" aria-hidden="true">★★★★★</span><b data-t="rating"></b><a href="https://www.google.com/maps/place/eMTBoka/@42.4427665,18.6871044,17z/data=!4m8!3m7!1s0x134c31003ed33cf7:0x901cf70fd061e987!8m2!3d42.4427665!4d18.6871044!9m1!1b1" data-t="ratingCta"></a></p>
+      <p class="rating"><span class="stars" aria-hidden="true">★★★★★</span><b data-t="rating"></b><a href="https://www.google.com/maps?cid=10384446488102168967" data-t="ratingCta"></a></p>
       <div class="soc">
         <a href="https://www.instagram.com/e_bike_tivat/" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
-        <a href="https://maps.app.goo.gl/2aDaui1P1Jf38zRu6" aria-label="Google Maps"><svg><use href="#i-map"/></svg></a>
+        <a href="https://www.google.com/maps?cid=10384446488102168967" aria-label="Google Maps"><svg><use href="#i-map"/></svg></a>
         <a href="mailto:ebiketivat@gmail.com" aria-label="Email"><svg><use href="#i-mail"/></svg></a>
         <span class="copy" data-t="foot"></span>
       </div>
@@ -538,16 +520,6 @@ body.lock .track{pointer-events:none}
   </div>
 </div>
 
-<!-- stories viewer -->
-<div class="sv" id="sv" role="dialog" aria-modal="true" aria-label="Stories">
-  <div class="sv-box">
-    <img id="svImg" alt="">
-    <div class="sv-bars" id="svBars"></div>
-    <div class="sv-top"><span class="av"><img src="img/logo-white.png" alt=""></span><span id="svName"></span><button class="icon-btn" type="button" id="svX"><svg><use href="#i-x"/></svg></button></div>
-    <div class="sv-nav"><button type="button" id="svPrev" aria-label="Previous"></button><button type="button" id="svNext" aria-label="Next"></button></div>
-  </div>
-</div>
-
 <!-- lightbox -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo">
   <img id="lbImg" alt="">
@@ -559,15 +531,15 @@ body.lock .track{pointer-events:none}
 <script>
 const COPY = {
   me: {
-    nav: ['O nama', 'Najam', 'Rute', 'Usluge', 'Galerija', 'Kontakt'],
+    nav: ['O nama', 'Najam', 'Rute', 'Galerija', 'Usluge', 'Kontakt'],
     heroLabel: 'Iznajmljivanje e-bicikala i SUP dasaka · Tivat',
     heroTitle: 'Duže rute. Manje napora.',
-    heroSub: 'Trek e-MTB, i:SY gradski e-bicikli i SUP daske na šetalištu u Donjoj Lastvi — krenite od naših vrata do Kotora, Luštice ili serpentina Njeguša.',
+    heroSub: 'Trek e-MTB, i:SY gradski e-bicikli i SUP daske na Donja Lastva Obala — krenite od naših vrata do Kotora, Luštice ili serpentina Njeguša.',
     ctaBook: 'Rezerviši', ctaRoutes: 'Pogledaj rute',
-    facts: ['Svaki dan 08:00–20:00', 'Šetalište Donja Lastva, Tivat', 'Dostava bicikala do hotela'],
-    aboutLabel: 'O nama', aboutTitle: 'Mali rent na tivatskoj obali',
-    aboutP1: 'Od 2024. iznajmljujemo električne bicikle i SUP daske uz samo more u Donjoj Lastvi. Trek brdski e-bicikli za uspone, i:SY gradski za šetalište, JOBE daske za mirna jutra na zalivu.',
-    aboutP2: 'Puteve Boke znamo napamet i rado ćemo vam reći kuda da vozite — od lake obalne ture do cijelog dana preko Lovćena.',
+    facts: ['Svaki dan 08:00–20:00', 'Donja Lastva Obala, Tivat', 'Dostava bicikala do hotela'],
+    aboutLabel: 'O nama', aboutTitle: 'Vaš rent na tivatskoj obali',
+    aboutP1: 'Od 2024. iznajmljujemo električne bicikle i SUP daske uz samo more na Donja Lastva Obala. Trek brdski e-bicikli za uspone, i:SY gradski za šetalište, JOBE daske za mirna jutra na zalivu.',
+    aboutP2: 'Najslikovitije rute znamo napamet i rado ćemo vam reći kuda da vozite — od lake obalne ture do cijelog dana preko Lovćena.',
     stats: [['3', 'vrste najma'], ['7', 'dana u nedjelji'], ['12', 'sati dnevno']],
     tag: 'Trek · i:SY · SUP',
     rentLabel: 'Najam', rentTitle: 'Izaberite vožnju', rentIntro: 'Cijene sa našeg cjenovnika. Dodirnite karticu za detalje.',
@@ -601,25 +573,25 @@ const COPY = {
       ['Užina za put', 'Proteinske pločice u radnji, da imate snage do kraja ture.']
     ],
     bookLabel: 'Rezervacija', bookTitle: 'Rezervacija u tri koraka',
-    steps: [['Izaberite', 'Bicikl ili dasku i na koliko vremena.'], ['Pišite nam', 'WhatsApp, Viber ili Telegram — sa datumom i vremenom.'], ['Vozite', 'Preuzmite u Donjoj Lastvi, Tivat, i krenite.']],
+    steps: [['Izaberite', 'Bicikl ili dasku i na koliko vremena.'], ['Pišite nam', 'WhatsApp, Viber ili Telegram — sa datumom i vremenom.'], ['Vozite', 'Preuzmite na Donja Lastva Obala, Tivat, i krenite.']],
     bookHours: 'Radimo svaki dan 08:00–20:00',
     galLabel: 'Galerija', galTitle: 'Boka sa sjedišta bicikla',
     contactLabel: 'Kontakt', contactTitle: 'Gdje smo',
     addrL: 'Adresa', addr: 'Donja Lastva Obala, Seljanovo · Tivat 85320', hoursL: 'Radno vrijeme', hours: 'Svaki dan 08:00–20:00',
-    waL: 'WhatsApp', vbL: 'Viber · Telegram', mailL: 'Email', mapCta: 'Otvori u Google Maps', mapSub: 'Na obali u Donjoj Lastvi',
+    waL: 'WhatsApp', vbL: 'Viber · Telegram', mailL: 'Email', mapCta: 'Otvori u Google Maps', mapSub: 'Donja Lastva Obala, Tivat',
     rating: '4,9 na Google · 66 recenzija', ratingCta: 'Pročitaj recenzije', foot: '© 2026 eMTBoka · najam e-bicikala i SUP-a, Tivat',
     drag: 'Povucite', close: 'Zatvori', waText: 'Zdravo! Želim da rezervišem'
   },
   en: {
-    nav: ['About', 'Rental', 'Routes', 'Services', 'Gallery', 'Contact'],
+    nav: ['About', 'Rental', 'Routes', 'Gallery', 'Services', 'Contact'],
     heroLabel: 'E-bike and SUP rental · Tivat',
     heroTitle: 'Bigger routes. Less effort.',
-    heroSub: 'Trek e-MTBs, i:SY city e-bikes and SUP boards on the Donja Lastva waterfront — ride from our door to Kotor, Luštica or the Njeguši serpentines.',
+    heroSub: 'Trek e-MTBs, i:SY city e-bikes and SUP boards on Donja Lastva Obala — ride from our door to Kotor, Luštica or the Njeguši serpentines.',
     ctaBook: 'Book now', ctaRoutes: 'See routes',
-    facts: ['Daily 08:00–20:00', 'Donja Lastva waterfront, Tivat', 'Bike delivery to your hotel'],
-    aboutLabel: 'About us', aboutTitle: 'A small rental on the Tivat waterfront',
-    aboutP1: 'Since 2024 we have been renting electric bikes and SUP boards right by the sea in Donja Lastva. Trek e-MTBs for the climbs, i:SY city bikes for the promenade, JOBE boards for calm mornings on the bay.',
-    aboutP2: 'We know the roads of Boka by heart and will gladly tell you where to ride — from an easy coastal loop to a full day over Lovćen.',
+    facts: ['Daily 08:00–20:00', 'Donja Lastva Obala, Tivat', 'Bike delivery to your hotel'],
+    aboutLabel: 'About us', aboutTitle: 'Your rental on the Tivat waterfront',
+    aboutP1: 'Since 2024 we have been renting electric bikes and SUP boards right by the sea on Donja Lastva Obala. Trek e-MTBs for the climbs, i:SY city bikes for the promenade, JOBE boards for calm mornings on the bay.',
+    aboutP2: 'We know the most scenic routes by heart and will gladly tell you where to ride — from an easy coastal loop to a full day over Lovćen.',
     stats: [['3', 'ways to ride'], ['7', 'days a week'], ['12', 'hours a day']],
     tag: 'Trek · i:SY · SUP',
     rentLabel: 'Rental', rentTitle: 'Pick your ride', rentIntro: 'Prices from our price list. Tap a card for details.',
@@ -653,25 +625,25 @@ const COPY = {
       ['Snacks for the ride', 'Protein bars at the shop, so you have energy to the end of the ride.']
     ],
     bookLabel: 'Booking', bookTitle: 'Book in three steps',
-    steps: [['Choose', 'A bike or a board and for how long.'], ['Message us', 'WhatsApp, Viber or Telegram — with date and time.'], ['Ride', 'Pick it up in Donja Lastva, Tivat, and go.']],
+    steps: [['Choose', 'A bike or a board and for how long.'], ['Message us', 'WhatsApp, Viber or Telegram — with date and time.'], ['Ride', 'Pick it up on Donja Lastva Obala, Tivat, and go.']],
     bookHours: 'Open every day 08:00–20:00',
     galLabel: 'Gallery', galTitle: 'Boka from the saddle',
     contactLabel: 'Contact', contactTitle: 'Find us',
     addrL: 'Address', addr: 'Donja Lastva Obala, Seljanovo · Tivat 85320', hoursL: 'Hours', hours: 'Every day 08:00–20:00',
-    waL: 'WhatsApp', vbL: 'Viber · Telegram', mailL: 'Email', mapCta: 'Open in Google Maps', mapSub: 'On the waterfront in Donja Lastva',
+    waL: 'WhatsApp', vbL: 'Viber · Telegram', mailL: 'Email', mapCta: 'Open in Google Maps', mapSub: 'Donja Lastva Obala, Tivat',
     rating: '4.9 on Google · 66 reviews', ratingCta: 'Read reviews', foot: '© 2026 eMTBoka · e-bike and SUP rental, Tivat',
     drag: 'Drag me', close: 'Close', waText: 'Hi! I would like to book'
   },
   ru: {
-    nav: ['О нас', 'Прокат', 'Маршруты', 'Услуги', 'Галерея', 'Контакты'],
+    nav: ['О нас', 'Прокат', 'Маршруты', 'Галерея', 'Услуги', 'Контакты'],
     heroLabel: 'Прокат электробайков и SUP · Тиват',
     heroTitle: 'Больше маршрутов. Меньше усилий.',
-    heroSub: 'Электро-MTB Trek, городские i:SY и SUP-борды на набережной Доня Ластва — от наших дверей до Котора, Луштицы или серпантинов Негуши.',
+    heroSub: 'Электро-MTB Trek, городские i:SY и SUP-борды на Donja Lastva Obala — от наших дверей до Котора, Луштицы или серпантинов Негуши.',
     ctaBook: 'Забронировать', ctaRoutes: 'Маршруты',
-    facts: ['Каждый день 08:00–20:00', 'Набережная Доня Ластва, Тиват', 'Доставка байков к отелю'],
-    aboutLabel: 'О нас', aboutTitle: 'Небольшой прокат на набережной Тивата',
-    aboutP1: 'С 2024 года сдаём электровелосипеды и SUP-борды прямо у моря в Доне Ластве. Trek — для гор, городские i:SY — для набережной, борды JOBE — для спокойного утра на заливе.',
-    aboutP2: 'Мы знаем дороги Боки наизусть и подскажем, куда поехать — от лёгкой прогулки вдоль берега до целого дня через Ловчен.',
+    facts: ['Каждый день 08:00–20:00', 'Donja Lastva Obala, Tivat', 'Доставка байков к отелю'],
+    aboutLabel: 'О нас', aboutTitle: 'Ваш прокат на набережной Тивата',
+    aboutP1: 'С 2024 года сдаём электровелосипеды и SUP-борды прямо у моря на Donja Lastva Obala. Trek — для гор, городские i:SY — для набережной, борды JOBE — для спокойного утра на заливе.',
+    aboutP2: 'Мы знаем самые живописные маршруты наизусть и подскажем, куда поехать — от лёгкой прогулки вдоль берега до целого дня через Ловчен.',
     stats: [['3', 'вида проката'], ['7', 'дней в неделю'], ['12', 'часов в день']],
     tag: 'Trek · i:SY · SUP',
     rentLabel: 'Прокат', rentTitle: 'Выберите, на чём кататься', rentIntro: 'Цены из нашего прайса. Нажмите на карточку, чтобы узнать больше.',
@@ -679,8 +651,8 @@ const COPY = {
     items: [
       { key: 'trek', name: 'Trek e-MTB', kind: 'Электрический горный байк', line: 'Мощный и лёгкий на подъёмах — для Ловчена, Луштицы и грунтовок.', prices: [['3 часа', '30 €'], ['Весь день', '49 €']],
         details: ['Электрический горный байк Trek', 'Сильный мотор для крутых подъёмов и грунтовок', 'Батареи хватает на долгий день в седле'] },
-      { key: 'city', name: 'City bike i:SY', kind: 'Электрический городской байк', line: 'Компактный и удобный — для набережной, Порто Монтенегро и остановок на кофе.', prices: [['Весь день', '36 €']],
-        details: ['Компактный городской электробайк', 'Ехать легко, опыт не нужен', 'Лучший выбор для набережной и Порто Монтенегро'] },
+      { key: 'city', name: 'City bike i:SY', kind: 'Электрический городской байк', line: 'Компактный и удобный — для набережной, Porto Montenegro и остановок на кофе.', prices: [['Весь день', '36 €']],
+        details: ['Компактный городской электробайк', 'Ехать легко, опыт не нужен', 'Лучший выбор для набережной и Porto Montenegro'] },
       { key: 'sup', name: 'SUP-борд', kind: 'Доска для гребли стоя', line: 'Устойчивые борды JOBE — море прямо через дорогу.', prices: [['1 час', '10 €'], ['6 часов', '30 €']],
         details: ['Борд JOBE с веслом', 'Устойчивый, подходит новичкам', 'Море прямо через дорогу от проката'] }
     ],
@@ -705,12 +677,12 @@ const COPY = {
       ['Перекус в дорогу', 'Протеиновые батончики прямо в прокате, чтобы хватило сил до конца маршрута.']
     ],
     bookLabel: 'Бронь', bookTitle: 'Бронь в три шага',
-    steps: [['Выберите', 'Байк или борд и на сколько.'], ['Напишите нам', 'WhatsApp, Viber или Telegram — с датой и временем.'], ['Катайтесь', 'Заберите в Доне Ластве, Тиват, и в путь.']],
+    steps: [['Выберите', 'Байк или борд и на сколько.'], ['Напишите нам', 'WhatsApp, Viber или Telegram — с датой и временем.'], ['Катайтесь', 'Заберите на Donja Lastva Obala, Tivat, и в путь.']],
     bookHours: 'Работаем каждый день 08:00–20:00',
     galLabel: 'Галерея', galTitle: 'Бока из седла',
     contactLabel: 'Контакты', contactTitle: 'Как нас найти',
-    addrL: 'Адрес', addr: 'Donja Lastva Obala, Селяново · Тиват 85320', hoursL: 'Часы работы', hours: 'Каждый день 08:00–20:00',
-    waL: 'WhatsApp', vbL: 'Viber · Telegram', mailL: 'Почта', mapCta: 'Открыть в Google Maps', mapSub: 'На набережной в Доне Ластве',
+    addrL: 'Адрес', addr: 'Donja Lastva Obala, Seljanovo · Tivat 85320', hoursL: 'Часы работы', hours: 'Каждый день 08:00–20:00',
+    waL: 'WhatsApp', vbL: 'Viber · Telegram', mailL: 'Почта', mapCta: 'Открыть в Google Maps', mapSub: 'Donja Lastva Obala, Tivat',
     rating: '4,9 в Google · 66 отзывов', ratingCta: 'Читать отзывы', foot: '© 2026 eMTBoka · прокат электробайков и SUP, Тиват',
     drag: 'Тяните', close: 'Закрыть', waText: 'Здравствуйте! Хочу забронировать'
   }
@@ -721,7 +693,7 @@ const COPY = {
   var $ = function (id) { return document.getElementById(id); };
   var scroller = $('hscroll');
   var LANGS = ['me', 'en', 'ru'], HTML_LANG = { me: 'cnr', en: 'en', ru: 'ru' };
-  var NAV_TO = [1, 2, 3, 5, 7, 8];
+  var NAV_TO = [1, 2, 3, 4, 5, 7];
   var lang = 'me';
   try { var s0 = localStorage.getItem('emtboka-lang'); if (LANGS.indexOf(s0) >= 0) lang = s0; } catch (e) {}
   var WA = 'https://wa.me/38267548889', VB = 'viber://chat?number=%2B38269546547', TG = 'https://t.me/+38269546547';
@@ -731,15 +703,6 @@ const COPY = {
   var RENT_IMG = { trek: 'img/trek.jpg', city: 'img/city.jpg', sup: 'img/sup.jpg' };
   var ROUTE_IMG = ['img/r-kotor.jpg', 'img/r-lustica.jpg', 'img/r-njegusi.jpg', 'img/r-bigova.jpg', 'img/r-herceg.jpg', 'img/r-loop.jpg'];
   var SVC = [['truck', 'img/s-delivery.jpg'], ['tool', 'img/s-help.jpg'], ['users', 'img/s-group.jpg'], ['bolt', 'img/s-snack.jpg']];
-  var STORIES = [
-    ['img/trek.jpg', 'img/p11.jpg', 'img/p14.jpg', 'img/about-b.jpg'],
-    ['img/r-loop.jpg', 'img/r-njegusi.jpg', 'img/r-bigova.jpg', 'img/r-lustica.jpg', 'img/p10.jpg'],
-    ['img/sup.jpg', 'img/p26.jpg', 'img/p23.jpg', 'img/p32.jpg'],
-    ['img/city.jpg', 'img/p24.jpg', 'img/p05.jpg', 'img/p22.jpg'],
-    ['img/s-group.jpg', 'img/p18.jpg', 'img/p27.jpg', 'img/p17.jpg', 'img/p20.jpg'],
-    ['img/price.jpg']
-  ];
-  var RIBBON = ['img/s-delivery.jpg', 'img/p08.jpg', 'img/p09.jpg', 'img/p21.jpg', 'img/p25.jpg', 'img/p27.jpg', 'img/p11.jpg', 'img/p24.jpg', 'img/p18.jpg', 'img/p20.jpg', 'img/p17.jpg'];
   var GALLERY = ['img/p21.jpg', 'img/p25.jpg', 'img/p27.jpg', 'img/p18.jpg', 'img/p24.jpg', 'img/p26.jpg', 'img/p08.jpg', 'img/p11.jpg', 'img/p05.jpg', 'img/p22.jpg'];
 
   var C = function () { return COPY[lang]; };
@@ -749,7 +712,6 @@ const COPY = {
   }
 
   /* ---------- static strips (built once) ---------- */
-  $('strip').innerHTML = RIBBON.concat(RIBBON).map(function (s) { return '<img src="' + s + '" alt="" loading="lazy">'; }).join('');
   $('gal').innerHTML = GALLERY.map(function (s, i) { return '<button type="button" data-lb="' + i + '"><img src="' + s + '" alt="" loading="lazy"></button>'; }).join('');
 
   function render() {
@@ -769,15 +731,12 @@ const COPY = {
     $('routeList').innerHTML = c.routes.map(function (r, i) {
       return '<button class="route" type="button" data-route="' + i + '"><img src="' + ROUTE_IMG[i] + '" alt="" loading="lazy"><span class="t"><span class="n">0' + (i + 1) + '</span><h3>' + esc(r[0]) + '</h3><span class="m">' + esc(i === 5 ? c.loopMeta : c.routeMeta) + '</span></span></button>';
     }).join('');
-    $('stRow').innerHTML = c.storyNames.map(function (n, i) {
-      return '<button class="st" type="button" data-story="' + i + '"><span class="ring"><img src="' + STORIES[i][0] + '" alt="" loading="lazy"></span><span>' + esc(n) + '</span></button>';
-    }).join('');
     $('svcList').innerHTML = c.services.map(function (s, i) {
       return '<article><div class="ph"><img src="' + SVC[i][1] + '" alt="" loading="lazy"></div><div class="bd"><h3>' + svg(SVC[i][0]) + esc(s[0]) + '</h3><p>' + esc(s[1]) + '</p></div></article>';
     }).join('');
     $('stepList').innerHTML = c.steps.map(function (s, i) { return '<div class="step"><span class="n">0' + (i + 1) + '</span><div><h3>' + esc(s[0]) + '</h3><p>' + esc(s[1]) + '</p></div></div>'; }).join('');
     $('dragHintText').textContent = c.drag;
-    $('sheetX').setAttribute('aria-label', c.close); $('svX').setAttribute('aria-label', c.close); $('lbX').setAttribute('aria-label', c.close);
+    $('sheetX').setAttribute('aria-label', c.close); $('lbX').setAttribute('aria-label', c.close);
     document.querySelectorAll('.langs button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
     markNav();
     fitPanels();
@@ -826,35 +785,6 @@ const COPY = {
       '<h4>' + esc(c.bookRoute) + '</h4>' + msgButtons(r[0]) + '</div>');
   }
 
-  /* ---------- stories ---------- */
-  var sv = { i: 0, j: 0, t: null, start: 0, dur: 4500, raf: 0 };
-  function storyOpen(i) {
-    sv.i = i; sv.j = 0; $('sv').classList.add('open'); document.body.classList.add('lock');
-    $('svName').textContent = C().storyNames[i]; storyShow();
-  }
-  function storyShow() {
-    var set = STORIES[sv.i];
-    $('svImg').src = set[sv.j];
-    $('svBars').innerHTML = set.map(function (_, k) { return '<i><b style="width:' + (k < sv.j ? 100 : 0) + '%"></b></i>'; }).join('');
-    cancelAnimationFrame(sv.raf); sv.start = performance.now();
-    var bar = $('svBars').children[sv.j].firstChild;
-    var tick = function (now) {
-      var p = Math.min(1, (now - sv.start) / sv.dur); bar.style.width = (p * 100) + '%';
-      if (p < 1) sv.raf = requestAnimationFrame(tick); else storyStep(1);
-    };
-    sv.raf = requestAnimationFrame(tick);
-  }
-  function storyStep(d) {
-    var set = STORIES[sv.i]; sv.j += d;
-    if (sv.j < 0) { if (sv.i > 0) { sv.i--; sv.j = STORIES[sv.i].length - 1; } else sv.j = 0; }
-    else if (sv.j >= set.length) { if (sv.i < STORIES.length - 1) { sv.i++; sv.j = 0; } else { storyClose(); return; } }
-    $('svName').textContent = C().storyNames[sv.i]; storyShow();
-  }
-  function storyClose() { cancelAnimationFrame(sv.raf); $('sv').classList.remove('open'); document.body.classList.remove('lock'); }
-  $('svPrev').addEventListener('click', function () { storyStep(-1); });
-  $('svNext').addEventListener('click', function () { storyStep(1); });
-  $('svX').addEventListener('click', storyClose);
-
   /* ---------- lightbox ---------- */
   var lbI = 0;
   function lbShow() { $('lbImg').src = GALLERY[lbI]; }
@@ -887,14 +817,12 @@ const COPY = {
     var g = t.closest('[data-go]'); if (g) { e.preventDefault(); goTo(+g.getAttribute('data-go')); return; }
     var rc = t.closest('[data-rent]'); if (rc) { rentSheet(+rc.getAttribute('data-rent')); return; }
     var rt = t.closest('[data-route]'); if (rt) { routeSheet(+rt.getAttribute('data-route')); return; }
-    var st = t.closest('[data-story]'); if (st) { storyOpen(+st.getAttribute('data-story')); return; }
     var lb = t.closest('[data-lb]'); if (lb) { lbOpen(+lb.getAttribute('data-lb')); return; }
     if (t.closest('[data-close-sheet]')) { closeSheet(); return; }
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { closeAll(); closeSheet(); storyClose(); lbClose(); }
+    if (e.key === 'Escape') { closeAll(); closeSheet(); lbClose(); }
     if ($('lb').classList.contains('open')) { if (e.key === 'ArrowLeft') $('lbP').click(); if (e.key === 'ArrowRight') $('lbN').click(); }
-    if ($('sv').classList.contains('open')) { if (e.key === 'ArrowLeft') storyStep(-1); if (e.key === 'ArrowRight') storyStep(1); }
   });
   function goTo(i) { scroller.scrollTo({ left: i * scroller.clientWidth, behavior: 'smooth' }); }
   function markNav() {
