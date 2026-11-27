@@ -332,12 +332,14 @@ body.lock .track{pointer-events:none}
   .facts li{padding:6px 16px;justify-content:flex-start;font-size:13px}
   .facts{background:linear-gradient(180deg,transparent,rgba(12,12,11,.45) 40%)}
   .two{grid-template-columns:1fr;gap:16px}
-  .collage{height:30vh;aspect-ratio:auto;width:100%}
+  .collage{height:26vh;aspect-ratio:auto;width:100%}
   .collage .a{inset:0 28% 0 0}.collage .b{width:44%;height:70%}
   .stats{grid-template-columns:repeat(3,1fr)}
   .cards3{grid-template-columns:1fr;gap:10px}
   .rcard{flex-direction:row}
-  .rcard .ph{height:auto;width:34%;flex:none}
+  .rcard .ph{height:auto;width:34%;flex:none;position:relative}
+  .rcard .ph img{position:absolute;inset:0}
+  .rcard h3{font-size:20px}
   .rcard .line{display:none}
   .rcard .bd{padding:10px 12px;gap:3px}
   .routes{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(86px,17vh,150px);gap:8px}
